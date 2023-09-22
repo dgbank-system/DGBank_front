@@ -1,0 +1,151 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                        <h1>Welcome</h1>
+                        <h3>To BankDG</h3>
+                        <input type="submit" name="" value="Login"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Customer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Employee</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div *ngIf="currentStep === 1">
+                                    <h3 class="register-heading" style="color: white;">Apply as a Customer - Step 1</h3>
+                                    <form *ngIf= "currentStep === 1" [formGroup]="personalInfoForm"  (ngSubmit)="nextStep()">
+                                    <div class="row register-form">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="user" [(ngModel)]= "customer.firstName" required [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="First Name *" value="" #first="ngModel">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" [(ngModel)]= "customer.lastName"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Last Name *" value="" required #last="ngModel">                               
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text"  [(ngModel)]= "customer.email"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Email *" value="" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="date" [(ngModel)]= "customer.date"  class="form-control"  placeholder="Date" value="" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="maxl">
+                                                <label class="radio inline" style="margin-right: 10px;color: #fff;"> 
+                                                    <input type="radio" name="gender" [(ngModel)]="customer.gender" [value]="gender.Male" checked>
+                                                    <span> Male </span> 
+                                                </label>
+                                                <label class="radio inline" style="color: #fff;"> 
+                                                    <input type="radio" name="gender" [(ngModel)]="customer.gender" [value]="gender.Female">
+                                                    <span> Female </span> 
+                                                </label>
+                                                </div>
+                                            </div>     
+                                        </div>
+                                        <div class="col-md-6">
+                                        <div  class="form-group">
+                                                <input type="text" [(ngModel)]= "customer.address"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Address *" value="" required/>
+                                        </div>
+                                            <div class="form-group">
+                                                <input type="text" [(ngModel)]= "customer.phone" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Phone *" value="Phone" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control">
+                                                    <option class="hidden"  selected disabled>Please select your Account type </option>
+                                                    <option>Savings</option>
+                                                    <option>Checking</option>
+                                                </select>
+                                            </div>
+                                            <input type="submit" [disabled]= "personalInfoForm.invalid" class="btnRegister" value="Next" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
+
+                                        </div>
+                            
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade"  id="account" role="tabpanel" aria-labelledby="account-tab">
+                                <h3 class="register-heading" style="color: white;">Apply as a Customer - Step 2</h3>
+                                <div *ngIf = "currentStep === 2">
+                                <form  [formGroup]="accountInfoForm" (ngSubmit)="nextStep()">
+                                    <div class="row register-form">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="balance" [(ngModel)]= "account.balance"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Balance*" value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" [(ngModel)]= "customer.lastName"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Last Name *" value="" required >                               
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text"  [(ngModel)]= "customer.email"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Email *" value="" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="date" [(ngModel)]= "customer.date"  class="form-control"  placeholder="Date" value="" required/>
+                                            </div>
+                                        </div>
+                                    </div>              
+                                </form>
+                                </div>
+                            </div>
+
+
+
+                           
+                            </div>
+                            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <h3  class="register-heading">Apply as a Hirer</h3>
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="First Name *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Last Name *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Email *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" maxlength="10" minlength="10" class="form-control" placeholder="Phone *" value="" />
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Password *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control">
+                                                <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
+                                                <option>What is your Birthdate?</option>
+                                                <option>What is Your old Phone Number</option>
+                                                <option>What is your Pet Name?</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="`Answer *" value="" />
+                                        </div>
+                                        <input type="submit" class="btnRegister"  value="Register"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
