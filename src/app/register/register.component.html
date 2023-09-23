@@ -24,21 +24,20 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div *ngIf="currentStep === 1">
-                                    <h3 class="register-heading" style="color: white;">Apply as a Customer - Step 1</h3>
-                                    <form *ngIf= "currentStep === 1" [formGroup]="personalInfoForm"  (ngSubmit)="nextStep()">
+                                    <h3 class="register-heading" style="color: white;">Step 1 - Personal Information</h3>
                                     <div class="row register-form">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <input type="text" name="user" [(ngModel)]= "customer.firstName" required [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="First Name *" value="" #first="ngModel">
+                                                <input type="text" [(ngModel)]= "customer.firstName"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="First Name *" value="" >
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.lastName"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Last Name *" value="" required #last="ngModel">                               
+                                                <input type="text" [(ngModel)]= "customer.lastName"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Last Name *" value="" required >                               
                                             </div>
                                             <div class="form-group">
-                                                <input type="text"  [(ngModel)]= "customer.email"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Email *" value="" required/>
+                                                <input type="text"  [(ngModel)]= "customer.email"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Email *" value="" required/>
                                             </div>
                                             <div class="form-group">
-                                                <input type="date" [(ngModel)]= "customer.date"  class="form-control"  placeholder="Date" value="" required/>
+                                                <input type="date" [(ngModel)]= "customer.date" [ngModelOptions]= "{standalone: true}" class="form-control"  placeholder="Date" value="" required/>
                                             </div>
                                             <div class="form-group">
                                                 <div class="maxl">
@@ -55,50 +54,48 @@
                                         </div>
                                         <div class="col-md-6">
                                         <div  class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.address"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Address *" value="" required/>
+                                                <input type="text" [(ngModel)]= "customer.address"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Address *" value="" required/>
                                         </div>
                                             <div class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.phone" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Phone *" value="Phone" required/>
+                                                <input type="text" [(ngModel)]= "customer.phone" [ngModelOptions]= "{ standalone: true }" class="form-control" placeholder="Phone *" value="Phone" required/>
+                                                <div *ngIf="!isValidBalance(customer.phone)" class="invalid-feedback">Please enter a valid Phone.</div>
                                             </div>
-                                            <div class="form-group">
-                                                <select class="form-control">
-                                                    <option class="hidden"  selected disabled>Please select your Account type </option>
-                                                    <option>Savings</option>
-                                                    <option>Checking</option>
-                                                </select>
-                                            </div>
-                                            <input type="submit" [disabled]= "personalInfoForm.invalid" class="btnRegister" value="Next" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
 
-                                        </div>
-                            
+                                            <!-- <input type= "submit" (click)="saveCustomer(); nextStep()" class="btnRegister" value="Next" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;"> -->
+                                            <input type= "submit" (click)=" nextStep()" class="btnRegister" value="Next" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
+                                        </div>   
                                     </div>
-                                </form>
-                            </div>
-
-                            <div class="tab-pane fade"  id="account" role="tabpanel" aria-labelledby="account-tab">
-                                <h3 class="register-heading" style="color: white;">Apply as a Customer - Step 2</h3>
-                                <div *ngIf = "currentStep === 2">
-                                <form  [formGroup]="accountInfoForm" (ngSubmit)="nextStep()">
-                                    <div class="row register-form">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" name="balance" [(ngModel)]= "account.balance"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Balance*" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.lastName"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Last Name *" value="" required >                               
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text"  [(ngModel)]= "customer.email"  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Email *" value="" required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="date" [(ngModel)]= "customer.date"  class="form-control"  placeholder="Date" value="" required/>
-                                            </div>
-                                        </div>
-                                    </div>              
-                                </form>
                                 </div>
-                            </div>
+                         
 
+                
+                                <div *ngIf = "currentStep === 2">
+                                    <h3 class="register-heading" style="color: white;">Step 2 - Account Information</h3>
+                                        <div class="row register-form">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="balance" [(ngModel)]= "account.balance"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Balance*" value="">
+                                                    <div *ngIf="!isValidBalance(account.balance)" class="invalid-feedback">Please enter a valid numeric balance.</div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control" [(ngModel)]= "selectedAccountType" name="accountType">
+                                                      <option [value]="'Please select your Account type'"  selected disabled>Please select your Account type</option>
+                                                      <option [value]= "type.SAVINGS">Savings</option>
+                                                      <option [value]= "type.CHECKING">Checking</option>
+                                                    </select>
+                                                  </div>
+  
+                                                   
+                                                   
+                                                        <input type= "submit" (click)=" saveAccount()" class="btnRegister nextbutton" value="Register" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
+                                                  
+                                                        <input type= "submit"  (click)=" backStep()"class="btnRegister backbuttomn" value="Back" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
+                                                    
+                                           
+                                            </div>
+                                        </div>              
+                                </div>
+                           
 
 
                            

@@ -5,7 +5,7 @@ export interface Customer{
     firstName : string,
     lastName : string , 
     email : string ,
-    phone : number ,
+    phone : null ,
     address : string , 
    date : String ,
     gender : Gender
