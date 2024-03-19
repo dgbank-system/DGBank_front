@@ -1,1 +1,95 @@
-<p>login works!</p>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- Navbar-->
+
+<header class="header">
+    <nav class="navbar-login navbar-expand-lg navbar-light py-3">
+        <div class="container">
+            <!-- Navbar Brand -->
+            <a href="#" class="navbar-brand">
+                <img src="assets\images\asd.png" alt="logo" width="200">
+            </a>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="row py-5 mt-4 align-items-center">
+        
+        <!-- For Demo Purpose -->
+        <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+           
+            <img src="assets\images\OIP.jpeg" alt="" class="img-fluid mb-3 d-none d-md-block" width="200">
+            <h1>Welcome to <span class="blue-text">DGBank</span></h1>
+            <!-- <h3>Create an Account</h3> -->
+            <!-- <p class="font-italic text-muted mb-0">Create a minimal registeration page using Bootstrap 4 HTML form elements.</p>
+            <p class="font-italic text-muted">Snippet By <a href="https://bootstrapious.com" class="text-muted">
+                <u>Bootstrapious</u></a>
+            </p> -->
+        </div>
+
+        <!-- Registeration Form -->
+        <div class="col-md-7 col-lg-7 ml-auto">
+            <form action="#">
+                <div class="row offset-lg-1 ">
+
+                    <!-- User Name -->
+                    <div class="input-group col-lg-8 offset-lg-1 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-user text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="username" type="text" [(ngModel)]= "employee.username"  [ngModelOptions]= "{standalone: true}" name="username" placeholder="User Name" class="form-control bg-white border-left-0 border-md">
+                    </div>
+
+                   
+
+                    <!-- Password -->
+                    <div class="input-group col-lg-8 offset-lg-1  mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-lock text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="password" type="password" [(ngModel)]= "employee.password"  [ngModelOptions]= "{standalone: true}" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
+                    </div>
+                
+
+
+                    <!-- Submit Button -->
+                    <div class="row col-lg-8 offset-lg-1 ">
+                    <div class="form-group col-lg-4 mx-auto mb-0" style="text-align: center">
+                        <a class="btn btn-primary btn-block py-2" (click)="onLoginEmployee()">
+                            <span class="font-weight-bold" style="color: white;">Sign in</span>
+                        </a>
+                    </div>
+                    </div>
+                    
+                </div>
+                    <!-- Divider Text -->
+                    <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
+                        <div class="border-bottom w-100 ml-5"></div>
+                        <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
+                        <div class="border-bottom w-100 mr-5"></div>
+                    </div>
+
+                    
+
+                    <!-- Already Registered -->
+                    <div class="text-center w-100">
+                        <p class="text-muted font-weight-bold">Dont have account? <a href="#" class="text-primary ml-2" routerLink="/register" >Register</a></p>
+                    </div>
+
+               
+            </form>
+        </div>
+    </div>
+</div>

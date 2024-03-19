@@ -1,148 +1,138 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.0.0/font/bootstrap-icons.css" rel="stylesheet">
+
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="container register">
+<!-- Navbar-->
+<header class="header">
+    <nav class="navbar-login navbar-expand-lg navbar-light py-3">
+        <div class="container">
+            <!-- Navbar Brand -->
+            <a href="#" class="navbar-brand">
+                <img src="https://th.bing.com/th/id/OIP.BbIghUosCU4eQTg2XjEJVwHaCy?w=324&h=132&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="logo" width="200">
+            </a>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="row py-5 mt-4 align-items-center">
+        
+        <!-- For Demo Purpose -->
+        <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+           
+            <img src="https://th.bing.com/th/id/OIP.qiRcT7WWNhX6MZ7JRSeRXQHaHa?pid=ImgDet&rs=1" alt="" class="img-fluid mb-3 d-none d-md-block" width="200">
+            <h1>Welcome to <span class="blue-text">DGBank</span></h1>
+            <!-- <h3>Create an Account</h3> -->
+            <!-- <p class="font-italic text-muted mb-0">Create a minimal registeration page using Bootstrap 4 HTML form elements.</p>
+            <p class="font-italic text-muted">Snippet By <a href="https://bootstrapious.com" class="text-muted">
+                <u>Bootstrapious</u></a>
+            </p> -->
+        </div>
+
+        <!-- Registeration Form -->
+        <div class="col-md-7 col-lg-7 ml-auto">
+            <form action="#">
                 <div class="row">
-                    <div class="col-md-3 register-left">
-                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
-                        <h1>Welcome</h1>
-                        <h3>To BankDG</h3>
-                        <input type="submit" name="" value="Login"/><br/>
-                    </div>
-                    <div class="col-md-9 register-right">
-                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Customer</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Employee</a>
-                            </li>
-                        </ul>
-                        
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div *ngIf="currentStep === 1">
-                                    <h3 class="register-heading" style="color: white;">Step 1 - Personal Information</h3>
-                                    <div class="row register-form">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.firstName"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="First Name *" value="" >
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.lastName"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Last Name *" value="" required >                               
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text"  [(ngModel)]= "customer.email"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Email *" value="" required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="date" [(ngModel)]= "customer.date" [ngModelOptions]= "{standalone: true}" class="form-control"  placeholder="Date" value="" required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="maxl">
-                                                <label class="radio inline" style="margin-right: 10px;color: #fff;"> 
-                                                    <input type="radio" name="gender" [(ngModel)]="customer.gender" [value]="gender.Male" checked>
-                                                    <span> Male </span> 
-                                                </label>
-                                                <label class="radio inline" style="color: #fff;"> 
-                                                    <input type="radio" name="gender" [(ngModel)]="customer.gender" [value]="gender.Female">
-                                                    <span> Female </span> 
-                                                </label>
-                                                </div>
-                                            </div>     
-                                        </div>
-                                        <div class="col-md-6">
-                                        <div  class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.address"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Address *" value="" required/>
-                                        </div>
-                                            <div class="form-group">
-                                                <input type="text" [(ngModel)]= "customer.phone" [ngModelOptions]= "{ standalone: true }" class="form-control" placeholder="Phone *" value="Phone" required/>
-                                                <div *ngIf="!isValidBalance(customer.phone)" class="invalid-feedback">Please enter a valid Phone.</div>
-                                            </div>
 
-                                            <!-- <input type= "submit" (click)="saveCustomer(); nextStep()" class="btnRegister" value="Next" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;"> -->
-                                            <input type= "submit" (click)=" nextStep()" class="btnRegister" value="Next" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
-                                        </div>   
-                                    </div>
-                                </div>
-                         
-
-                
-                                <div *ngIf = "currentStep === 2">
-                                    <h3 class="register-heading" style="color: white;">Step 2 - Account Information</h3>
-                                        <div class="row register-form">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="text" name="balance" [(ngModel)]= "account.balance"  [ngModelOptions]= "{standalone: true}" class="form-control" placeholder="Balance*" value="">
-                                                    <div *ngIf="!isValidBalance(account.balance)" class="invalid-feedback">Please enter a valid numeric balance.</div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="form-control" [(ngModel)]= "selectedAccountType" name="accountType">
-                                                      <option [value]="'Please select your Account type'"  selected disabled>Please select your Account type</option>
-                                                      <option [value]= "type.SAVINGS">Savings</option>
-                                                      <option [value]= "type.CHECKING">Checking</option>
-                                                    </select>
-                                                  </div>
-  
-                                                   
-                                                   
-                                                        <input type= "submit" (click)=" saveAccount()" class="btnRegister nextbutton" value="Register" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
-                                                  
-                                                        <input type= "submit"  (click)=" backStep()"class="btnRegister backbuttomn" value="Back" style="background-color: #fff; color: #0062cc; border: none; border-radius: 1.5rem; padding: 2%; font-weight: 600; width: 50%; cursor: pointer;">
-                                                    
-                                           
-                                            </div>
-                                        </div>              
-                                </div>
-                           
-
-
-                           
-                            </div>
-                            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <h3  class="register-heading">Apply as a Hirer</h3>
-                                <div class="row register-form">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="First Name *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Last Name *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" maxlength="10" minlength="10" class="form-control" placeholder="Phone *" value="" />
-                                        </div>
-
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Password *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
-                                                <option>What is your Birthdate?</option>
-                                                <option>What is Your old Phone Number</option>
-                                                <option>What is your Pet Name?</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="`Answer *" value="" />
-                                        </div>
-                                        <input type="submit" class="btnRegister"  value="Register"/>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- User Name -->
+                    <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-user text-muted"></i>
+                            </span>
                         </div>
+                        <input id="username" type="text" [(ngModel)]= "employee.username"  [ngModelOptions]= "{standalone: true}" name="username" placeholder="User Name" class="form-control bg-white border-left-0 border-md">
+                       
                     </div>
-                </div>
 
-            </div>
+                    <!--Name -->
+                    <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-user text-muted"></i>
+                            </span>
+                        </div>
+                   
+                            <input id="name" type="text" [(ngModel)]= "employee.name"  [ngModelOptions]= "{standalone: true}" name="name" placeholder="Name" class="form-control bg-white border-left-0 border-md"  required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-envelope text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="email" type="email" [(ngModel)]= "employee.email"  [ngModelOptions]= "{standalone: true}" name="email" placeholder="Email" class="form-control bg-white border-left-0 border-md" >
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-phone-square text-muted"></i>
+                            </span>
+                        </div>     
+                        <input id="phone" type="tel" [(ngModel)]= "phoneNumber" [ngModelOptions]= "{ standalone: true }" minlength="11" maxlength="11" name="phone" placeholder="Phone Number" class="form-control bg-white border-md border-left-0 pl-3" (input)="validatePhoneNumber(phoneNumber)" >
+                        <div *ngIf="!isPhoneValid" class="text-danger validation-message ">
+                            Please enter a valid phone number (numeric digits only).
+                          </div>
+                    </div>.
+
+
+                    <!-- Address -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-map-marker text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="address" type="address" [(ngModel)]= "employee.address"  [ngModelOptions]= "{standalone: true}"  name="address" placeholder="Address" class="form-control bg-white border-left-0 border-md" >
+                    </div>
+
+                    <!-- Password -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-lock text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="password" type="password" [(ngModel)]= "employee.password"  [ngModelOptions]= "{standalone: true}" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md" >
+                    </div>
+
+                  
+
+                    <!-- Submit Button -->
+                    <div class="form-group col-lg-4 mx-auto mb-0">
+                        <button type="button" class="btn btn-primary btn-block py-2" [disabled]="isAnyInputEmpty()" (click)="saveEmployee()">
+                            <span class="font-weight-bold">Create your account</span>
+                          </button>
+                          
+                    </div>
+                    
+
+                    <!-- Divider Text -->
+                    <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
+                        <div class="border-bottom w-100 ml-5"></div>
+                        <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
+                        <div class="border-bottom w-100 mr-5"></div>
+                    </div>
+
+                    
+
+                    <!-- Already Registered -->
+                    <div class="text-center w-100 " >
+                        <p class="text-muted font-weight-bold">Already Registered? <a href="#" class="text-primary ml-2" routerLink="/login" >Login</a></p>
+                    </div>
+        
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CustomerService } from './services/customer.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { HomeComponent } from './home/home.component';
+import { AccountfFormComponent } from './account/accountf-form/accountf-form.component';
+import { AccountfDetailsComponent } from './account/accountf-details/accountf-details.component';
+import { TransactionsComponent } from './transactions/transactions.component';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { PerformanceTranComponent } from './performance-tran/performance-tran.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { DepositeComponent } from './deposite/deposite.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
+import { AlertComponent } from './alert/alert.component';
+import { RuleComponent } from './rule/rule.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from 'src/environments/environment.development';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +35,18 @@ import { CustomerService } from './services/customer.service';
     CustomerFormComponent,
     CustomerDetailsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    AccountfFormComponent,
+    AccountfDetailsComponent,
+    TransactionsComponent,
+    PerformanceTranComponent,
+    TransferComponent,
+    DepositeComponent,
+    WithdrawComponent,
+    AlertComponent,
+    RuleComponent,
+    
     
   ],
   imports: [
@@ -26,7 +54,22 @@ import { CustomerService } from './services/customer.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({ positionClass: 'toast-top-center',
+    preventDuplicates: true,
+    timeOut: 1000,}),
+    BrowserAnimationsModule,
+    TableModule,
+    DialogModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production
+      }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [CustomerService],
   bootstrap: [AppComponent]

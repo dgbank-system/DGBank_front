@@ -12,26 +12,15 @@ export class CustomerService {
 
   constructor(private http:HttpClient) { }
 
-  public getCustomer(username : String, password : String) : Observable<Customer[]>
+  public getCustomer() : Observable<Customer[]>
   {
-    const base64Credentials = btoa(`${username}:${password}`);
-
-    // Set the Authorization header with Basic authentication
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${base64Credentials}`,
-    });
-
-    // Send a request to the server for authentication
-    return this.http.get<Customer[]>(`${this.apiUrl}/customer/all`, { headers });
-      
+    return this.http.get<Customer[]>(`${this.apiUrl}/customer/all`);
   }
 
-  public addCustomer(customr :Customer , username : String , password : String) : Observable<Customer>
+  public addCustomer(customr :Customer ) : Observable<Customer>
   {
-    const headers = new HttpHeaders({
-    'Authorization': 'Basic ' + btoa(`${username}:${password}`)
-  });
-    return this.http.post<Customer>(`${this.apiUrl}/customer/add`,customr,{headers})
+   
+    return this.http.post<Customer>(`${this.apiUrl}/customer/add`,customr)
   }
 
   public updateCustomer(customr: Customer): Observable<Customer>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <title>Transaction</title>
+</head>
+<body>
+    <div class="table-container">
+      <table id="example" class="table table-bordered table-hover table-striped ">
+        <thead class = "table-dark">
+          <tr>
+            <th style="width: 15%;">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Transaction ID</span>
+                <i (click)="sort('id')" class="fa float-right" [ngClass]="{'fa-sort-asc': sortKey === 'id' && !reverse, 'fa-sort-desc': sortKey === 'id' && reverse, 'fa-sort': sortKey !== 'id'}"></i>
+              </div>
+              <input type="text" placeholder="Search Transaction ID" [(ngModel)]="searchTransactionId" (input)="applyFilters()" class="form-control smaller-dropdown">
+            </th>
+            <th style="width: 10%;">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Type</span>
+                <i class="fa float-right "></i>
+              </div>
+              <select [(ngModel)]="selectedType" (change)="applyFilters()" class="select">
+                <option value="" selected>All</option>
+                <option value="deposite">Deposite</option>
+                <option value="transfer">Transfer</option>
+                <option value="withdraw">Withdraw</option>
+              </select>
+            </th>
+            
+            <th style="width: 20%;" >
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Amount</span>
+              </div>
+              <div class="input-group "  >
+                <input type="number" placeholder="Less Than" [(ngModel)]="amountLessThan" (input)="applyFilters()" class="form-control smaller-dropdown">
+                <input type="number" placeholder="Greater Than" [(ngModel)]="amountGreaterThan" (input)="applyFilters()" class="form-control smaller-dropdown">
+              </div>
+            </th>
+            <th style="width: 10%;">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Date Range</span>
+              </div>
+              <div class="input-group">
+                <input type="date" [(ngModel)]="startDate" (input)="applyFilters()" class="form-control smaller-dropdown">
+                <input type="date" [(ngModel)]="endDate" (input)="applyFilters()" class="form-control smaller-dropdown">
+              </div>
+            </th>
+            
+            <th style="width: 10%;">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Status</span>
+                <i class="fa float-right"></i>
+              </div>
+              <select [(ngModel)]="selectedStatus" (change)="applyFilters()" class="select ">
+                <option value="" selected>All</option>
+                <option value="Successful">Successful</option>
+                <option value="Failed">Failed</option>
+              </select>
+            </th>
+          
+            <th style="width: 10%;"> 
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Account-From</span>
+              </div>
+              <input type="text" placeholder="AccountNo" [(ngModel)]="searchAccountId1" (input)="applyFilters()" class="form-control smaller-dropdown">
+            </th>
+            <th style="width: 10%;"> 
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Account-To</span>
+              </div>
+              <input type="text" placeholder="AccountNo" [(ngModel)]="searchAccountId2" (input)="applyFilters()" class="form-control smaller-dropdown">
+            </th>
+            <th style="width: 20%;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of filteredTransactions">
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.type }}</td>
+            <td class="text-center">{{ transaction.amount }}</td>
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.status }}</td>
+            <td>{{ transaction.accountId === null ? 'Null' : transaction.accountId }}</td>
+            <td>{{ transaction.anotherAccountId === null ? 'Null' : transaction.anotherAccountId }}</td>
+            <td>{{ transaction.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+
+  </body>
+      
+
+
+

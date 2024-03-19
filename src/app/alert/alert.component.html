@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PrimeNG TableFlexibleScrollDemo</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+    <link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a href="home" class="navbar-brand"><img href="" src="assets\images\asd.png" alt="logo" width="200"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <h1>Suspects</h1>
+        </ul>
+        <!-- <form class="form-inline my-2 my-lg-0">
+            <input type="search" (ngModelChange)="searchAlert(key.value)" #key="ngModel" ngModel name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search alerts..." required>
+        </form> -->
+    </div>
+</nav>
+<hr>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" id="main-container">
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Alerted Entity</th>
+                <th>Rule</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let alert of alerts">
+                
+              <tr>
+                <td class="text-center">
+                    <ng-container *ngIf="alert?.customerFirstName || alert?.customerLastName; else accountIdDisplay">
+                      {{ alert?.customerFirstName }} {{ alert?.customerLastName }}
+                    </ng-container>
+                    <ng-template #accountIdDisplay>
+                      {{ alert.accountId }}
+                    </ng-template>
+                  </td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="m-0">{{ alert?.description }}</p>
+                        <button id="openTransactionTableButton" class="awesome-button pointer-button" (click)="onOpenModel(alert)" type="button" data-toggle="modal" data-target="#TransactionTable">Open Transaction Table</button>
+                    </div>
+                </td>
+            </tr>
+            
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="TransactionTable" tabindex="-1" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="employeeEditModalLabel">Transactions of {{selectedAlert?.customerFirstName}} {{selectedAlert?.customerLastName}}</h3>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let transaction of selectedAlert?.trxs">
+                        <td>{{ transaction.id }}</td>
+                        <td>{{ transaction.type }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.date }}</td>
+                        <td>{{ transaction.status }}</td>
+                        <td>{{ transaction.description }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+<style>
+  /* html {
+  font-size: 14px;
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: normal;
+    background: var(--surface-ground);
+    color: var(--text-color);
+    padding: 1rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.card {
+    background: var(--surface-card);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+} */
+.awesome-button {
+  background-color: #314d6b; /* Blue background color */
+  color: #fff; /* White text color */
+  border: none; /* No border */
+  padding: 10px 20px;
+  border-radius: 5px; 
+  font-size: 16px; /* Text size */
+}
+
+.awesome-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Add this CSS to your component's style file or global stylesheet */
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <table>
+    <tr>
+      <th>Customer Name</th>
+      <th>Alert ID</th>
+      <th>Rule</th>
+    </tr>
+    <ng-container *ngFor="let alert of alerts">
+
+          <td>{{ alert.customerFirstName }} {{ alert.customerLastName }}</td>
+          <td>{{ alert.id }}</td>
+          <td>{{alert.description}}</td>
+          <td>
+            <table>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Description</th>
+              </tr>
+              <tr *ngFor="let trx of alert.trxs">
+                <td>{{ trx.id }}</td>
+                <td>{{ trx.type }}</td>
+                <td>{{ trx.amount }}</td>
+                <td>{{ trx.date }}</td>
+                <td>{{ trx.status }}</td>
+                <td>{{ trx.description }}</td>
+              </tr>
+            </table>
+          </td>
+
+      </ng-container>
+
+  </table> -->
+  

@@ -1,95 +1,213 @@
-.register{
-  margin-top: 3%;
-  padding: 3%;
-}
-.register-left{
-  text-align: center;
-  color: #0062cc;
-  margin-top: 4%;
-}
-.register-left input{
-  border: none;
-  border-radius: 1.5rem;
-  padding: 2%;
-  width: 60%;
-  background: #0062cc;
-  font-weight: bold;
-  color: #f8f9fa;
-  margin-top: 30%;
-  margin-bottom: 3%;
-  cursor: pointer;
-}
-.register-right{
-  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-  border-top-left-radius: 10% 50%;
-  border-bottom-left-radius: 10% 50%;
-}
-.register-left img{
-  margin-top: 15%;
-  margin-bottom: 5%;
-  width: 25%;
-  -webkit-animation: mover 2s infinite  alternate;
-  animation: mover 1s infinite  alternate;
-}
-@-webkit-keyframes mover {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-20px); }
-}
-@keyframes mover {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-20px); }
-}
-.register-left p{
-  font-weight: lighter;
-  padding: 12%;
-  margin-top: -9%;
-}
-.register .register-form{
-  padding: 10%;
-  margin-top: 10%;
-}
-.btnRegister{
-  float: right;
-  margin-top: 5%;
-  border: none;
-  border-radius: 1.5rem;
-  padding: 2%;
-  background: #fff;
-  color: #0062cc;
-  font-weight: 600;
-  width: 50%;
-  cursor: pointer;
-}
-.register .nav-tabs{
-  margin-top: 3%;
-  border: none;
-  background: #0062cc;
-  border-radius: 1.5rem;
-  width: 28%;
-  float: right;
-}
-.register .nav-tabs .nav-link{
-  padding: 2%;
-  height: 34px;
-  font-weight: 600;
-  color: #fff;
-  border-top-right-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem;
-}
-.register .nav-tabs .nav-link:hover{
-  border: none;
-}
-.register .nav-tabs .nav-link.active{
-  width: 100px;
-  color: #0062cc;
-  border: 2px solid #0062cc;
-  border-top-left-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem;
-}
-.register-heading{
-  text-align: center;
-  margin-top: 8%;
-  margin-bottom: -15%;
-  color: #495057;
+
+
+.border-md {
+  border-width: 2px;
 }
 
+.btn-facebook {
+  background: #405D9D;
+  border: none;
+}
+
+.btn-facebook:hover, .btn-facebook:focus {
+  background: #314879;
+}
+
+.btn-twitter {
+  background: #42AEEC;
+  border: none;
+}
+
+.btn-twitter:hover, .btn-twitter:focus {
+  background: #1799e4;
+}
+
+.blue-text {
+  color: #314879;
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+
+
+
+.form-control:not(select) {
+  padding: 1.5rem 0.5rem;
+}
+
+select.form-control {
+  height: 52px;
+  padding-left: 0.5rem;
+}
+
+.form-control::placeholder {
+  color: #ccc;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.form-control:focus {
+  box-shadow: none;
+}
+.form-shape {
+  position: relative;
+}
+
+.validation-message {
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  margin-left: 17px; /* Adjust the margin as needed */
+}
+
+.bg-custom {
+  background-color: #206565; /* Change to your desired background color */
+}
+
+.navbar-brand img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+ 
+}
+
+.navbar-text{
+  color: #42AEEC;
+}
+.welcome-text {
+  display: flex;
+  align-items: center;
+}
+
+.welcome {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.hi-text{
+  color: red;
+  cursor: pointer;
+  text-decoration: underline;
+}
+@import 'ngx-toastr/toastr';
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* Style for the navbar */
+.navbar-login {
+  background-color: rgba(255, 255, 255, 0.8); /* Adjust the background color and opacity as needed */
+  padding: 10px 20px; /* Add padding to the navbar content */
+  position: relative;
+  z-index: -1; /* Ensure the navbar appears on top of the background image */
+}
+
+/* Additional styles for the navbar content */
+.navbar-brand {
+  margin-left: 10px; /* Adjust the spacing as needed */
+}
+
+.welcome-text {
+  position: absolute;
+  top: 20px; /* Adjust the vertical position as needed */
+  right: 20px; /* Adjust the horizontal position as needed */
+  color: black; /* Text color for the welcome message */
+}
+/* Position text in the middle of the page/image */
+
+
+@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+body{
+  margin-top:20px;
+  background: #f5f5f5;
+}
+.card {
+  border: none;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+  margin-bottom: 30px;
+}
+.w-60 {
+  width: 60px;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+a {
+  color: #707070;
+}
+/* Add this CSS to your component's CSS file, e.g., transaction-list.component.css */
+.fixed-width-description {
+  width: 200px; /* Adjust the width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+}
+thead {
+  background-color: #21364c; /* Dark gray background color */
+  color: #fff; /* White text color */
+  font-weight: bold; /* Bold font weight */
+  text-transform: uppercase; /* Uppercase text */
+  text-align: center; /* Center-align text */
+  border: 2px solid #000; /* Black border */
+  padding: 10px; /* Add padding space inside header cells */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+.custom-checkbox {
+  position: relative;
+  display: inline-block;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px; 
+}
+
+.custom-checkbox input:checked + .checkmark {
+  background-color: #4ea130; 
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked + .checkmark:after {
+  display: block;
+}
+
+.custom-checkbox .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

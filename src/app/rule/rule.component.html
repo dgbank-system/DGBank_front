@@ -1,0 +1,204 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <a  href="home" class="navbar-brand" ><img href="" src="assets\images\asd.png" alt="logo" width="200"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+       <li class="nav-item active">
+          <a  class="btn btn-primary tooltips"  style="color: rgb(255, 255, 255);" (click)="onOpenModel($event,null, 'add')">Add Rule  <span class="sr-only">(current)</span></a>
+       </li>
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+       <input type="search"  (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
+        name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." required>
+    </form> -->
+ </div> 
+</nav>
+<hr>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" id="main-container">
+  <div class="row">
+    <table class="table table-bordered table-hover table-striped ">
+      <thead >
+        <tr>
+          <th>Rule Number</th>
+          <th>Based on</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rule of rules">
+          <td class="text-center">{{ rule?.id }}</td>
+          <td class="text-center">{{ rule?.ruleType }}</td>
+          <td class ="text-center">IF the {{rule?.aggregation}} on (Amount) of the {{rule?.transactionType}} {{rule?.operation}} {{rule?.amount}} </td>
+          
+          <td class ="text-center">
+            <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" (click)="onOpenModel($event, rule, 'edit')">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete" (click)="onOpenModel($event, rule, 'delete')">
+              <i class="fa fa-times"></i>
+            </a>
+          </td>
+
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="AddRuleModel" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Add Rule</h1>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddRule(addForm)">
+            <!-- Your existing code for selecting rule properties -->
+            <div class="form-group mb-3">
+              <label for="transactionType">Transaction Type</label>
+              <select ngModel name="transactionType" class="form-control" id="ruleType">
+                <option value="Transfer">Transfer</option>
+                <option value="Withdraw">Withdraw</option>
+                <option value="Deposite">Deposite</option>
+              </select>
+            </div>
+          <div class="form-group mb-3">
+            <label for="ruleType">Based on</label>
+            <select  ngModel name="ruleType" class="form-control" id="ruleType">
+              <option value="Customer">Customer</option>
+              <option value="Account">Account</option>
+            </select>
+         </div>
+          <div class="form-group mb-3">
+            <label for = "operation">Operation on Amount</label>
+            <select  ngModel name="operation" class="form-control" id="operation">
+              <option value="Greater">Greater than</option>
+              <option value="Less">Less than</option>
+              <option value="Equal">Equal to</option>
+            </select>
+          </div>
+          <div class = "form-group mb-3">
+            <label for = "aggregation" >Aggregation on Amount</label>
+            <select  ngModel name="aggregation" class="form-control" id="aggregation">
+              <option value="Sum">Sum</option>
+              <option value="Avg">Average</option>
+              <option value="Min">Min</option>
+              <option value="Max">Max</option>
+              <option value="Count">Count</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="amount">Amount:</label>
+            <input type="text"  ngModel name="amount" class="form-control" id="amount" />
+          </div>
+          <div class = "form-group mb-3">
+            <label for="date">Date:</label>
+            <input type="date"  ngModel name="date" class="form-control" id="date" />
+          </div>
+          <div class="modal-footer">
+            <button type="button"class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button [disabled]="addForm.invalid" id="add-employee-form" type="submit" class="btn btn-primary" >Save changes</button>
+         </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EditEmployeeModel -->
+<div class="modal fade" id="EditruleModel" tabindex="-1" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="employeeEditModalLabel">Edit Rule</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form #editForm="ngForm" >
+        <div class="form-group">
+          <label for="transactionType">Transaction Type</label>
+          <select ngModel="{{Editrule?.transactionType}}" name="transactionType" class="form-control" id="ruleType">
+            <option value="Transfer">Transfer</option>
+            <option value="Withdraw">Withdraw</option>
+            <option value="Deposite">Deposite</option>
+          </select>
+       </div>
+       <div class="form-group">
+        <label for="ruleType">Based on</label>
+        <select   ngModel="{{Editrule?.ruleType}}" name="ruleType" class="form-control" id="ruleType">
+          <option value="Customer">Customer</option>
+          <option value="Account">Account</option>
+        </select>
+     </div>
+       <input type="hidden" ngModel="{{Editrule?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+       
+       <div class="form-group">
+          <label for="operation">Operation on Amount</label>
+          <select   ngModel="{{Editrule?.operation}}" name="operation" class="form-control" id="operation">
+            <option value="Greater">Greater than</option>
+            <option value="Less">Less than</option>
+            <option value="Equal">Equal to</option>
+          </select>
+       </div>
+       <div class="form-group">
+          <label for="aggregation">Aggregation on Amount</label>
+          <select   ngModel="{{Editrule?.aggregation}}" name="aggregation" class="form-control" id="aggregation">
+            <option value="Sum">Sum</option>
+            <option value="Avg">Average</option>
+            <option value="Min">Min</option>
+            <option value="Max">Max</option>
+            <option value="Count">Count</option>
+          </select>
+       </div>
+       <div class="form-group">
+          <label for="phone">Amount</label>
+          <input type="text" ngModel="{{Editrule?.amount}}" name="amount" class="form-control" id="phone" placeholder="Address">
+       </div>
+       <div class="form-group">
+          <label for="phone">Date</label>
+          <input type="date" ngModel="{{Editrule?.date}}" name="date" class="form-control" id="imageUrl" placeholder="BD">
+       </div>
+       <div class="modal-footer">
+          <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+          <button (click)="onUpdateRule(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+       </div>
+      </form>
+      </div>    
+    </div>
+  </div>
+</div>
+
+<!-- DeleteEmployeeModel -->
+<div class="modal" id="DeleteruleModel" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Rule</h5>
+        <button type="button" class="close" data-dismiss="modal" #deleteModalCloseButton aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this rule {{ Editrule?.id}}?</p>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="confirmDeleteCheckbox" [(ngModel)]="confirmDelete">
+          <label class="form-check-label" for="confirmDeleteCheckbox">I confirm that I want to delete this rule.</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="onDeleteEmloyee(Editrule.id)" type="button" class="btn btn-danger" id="deleteButton" [disabled]="!confirmDelete">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+

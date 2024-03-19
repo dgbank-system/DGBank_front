@@ -1,8 +1,11 @@
 import { Type } from "../enum/typeEnum";
+// import { Customer } from "./customer";
 
 export interface Account{
     id : number ,
-    balance : null ,
+    balance : string ,
     type : Type ,   
-    customer_id: number; // Reference to the customer who owns this account
+    customerid: string;
+    customerFirstName : String;
+    customerLastName : string // Reference to the customer who owns this account
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../interface/customer';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -12,24 +13,13 @@ export class CustomerComponent implements OnInit {
 
   public customers !: Customer[];
 
-  constructor(private customerservice: CustomerService){}
+
+  constructor(private customerservice: CustomerService,private route: ActivatedRoute){}
   
   ngOnInit(): void {
-    this.getCustomer()
+
+   
   }
 
-  
-  public getCustomer() : void {
-    this.customerservice.getCustomer('Ahmed', 'moderesta').subscribe(
-      (response: Customer[]) => {
-        this.customers = response;
-        console.log('Customers:', this.customers);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-    
-  }
 
 }

@@ -1,0 +1,17 @@
+.smaller-dropdown
+{
+  font-size: 12px; 
+  padding: 2px 5px; 
+  height: 28px; 
+  border: 1px solid #ccc;
+}
+thead {
+  background-color: #21364c; 
+  color: #fff; 
+  font-weight: bold; 
+  text-transform: uppercase; 
+  text-align: center; 
+  border: 2px solid #000; 
+  padding: 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}

@@ -1,0 +1,337 @@
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="navbar-container">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-text">
+        <span class="welcome">Welcome,</span>
+        <a class="hi-text" style="color: #000000;">{{ employeeName }}</a>
+      </div>
+      <div class="icon-img-center">
+        <div class="circle-button">
+          <img src="assets/images/OIP.jpeg" alt="Image">
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <a href="#" class="navbar-link">Logout</a>
+    </div>
+  </nav>
+  
+  
+  <div class="background-img" [style.backgroundImage]="'url(' + currentBackgroundImage + ')'"></div>
+</div>
+
+<div class="card-container alert-custom">
+  
+    <div class="card larger-card customer-card" id="customer-card" (mouseenter)="changeBackground('assets/images/1.jpg')" (mouseleave)="resetBackgroundImage('assets/images/1.jpg')">
+      <a href="#" class="alert-icon" (click)="navigateToAlert($event)">&#9888;</a>
+      <div class="card-content">
+        <h2>Customer</h2>
+        <p>you can easily add new customers to our bank's system. This allows you to manage customer accounts and transactions efficiently.</p>
+        <div class="button-container">
+          <button class="action-button " (click)="navigateToAddCustomer()">Add</button>
+          <button class="action-button show-button" (click)="navigateToShowCustomer()">Show</button>
+        </div>
+      </div>
+    </div>
+    <!-- Rest of your code for the "Account" card -->
+  
+  
+  <div class="card larger-card account-card" id="customer-card" (mouseenter)="changeBackground('assets/images/2.jpg')" (mouseleave)="resetBackgroundImage('assets/images/2.jpg')">
+    <div class="card-content">
+      <h2>Account</h2>
+      <p>you have the capability to create and manage accounts for our customers.</p>
+      <div class="button-container">
+        <button class="action-button" (click)="navigateToAddAccountr()">Add</button>
+        <button class="action-button show-button" (click)="navigateToshowAccount()">Show</button>
+      </div>
+    </div>
+  </div>
+  <div class="card single-button larger-card" id="customer-card" (mouseenter)="changeBackground('assets/images/3.jpg')" (mouseleave)="resetBackgroundImage('assets/images/3.jpg')">
+    <div class="card-content">
+      <h2>Transactions</h2>
+      <p>you can access and view a comprehensive list of transactions made by our customers. Easily track and analyze financial.</p>
+      <button class="action-button" (click)="navigateToshowTRx()">Show</button>
+    </div>
+  </div>
+  <div class="card single-button larger-card" id="customer-card" (mouseenter)="changeBackground('assets/images/4.jpg')" (mouseleave)="resetBackgroundImage('assets/images/4.jpg')">
+    <div class="card-content">
+      <h2>Services</h2>
+      <p>Our bank offers a wide range of services for our customers. you can facilitate various transactions, including deposits, transfers, and withdrawals</p>
+      <button class="action-button" (click)="navigateToServices()">Perform</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .navbar-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+  .background-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(4px);
+    z-index: -1;
+    transition: background-image 0.3s ease;
+  }
+
+  .background-img::before {
+    content: "";
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(7px); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; 
+  }
+
+  .navbar {
+    background-color: #b7c3cf77;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  .navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.navbar-link {
+  text-decoration: none;
+  color: #fff;
+}
+  .navbar-brand img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .icon-img-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .circle-button {
+    width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Style the image inside the button */
+.circle-button img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+/* Optional: Add hover effect */
+.circle-button:hover {
+  background-color:  rgb(150, 186, 216); /* Change the background color on hover */
+}
+
+.welcome {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  font-family: 'Roboto', sans-serif;
+}
+.hi-text {
+  color: #000000;
+  font-weight: bold;
+}
+.navbar-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    position: absolute;
+    bottom: 20px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between; /* Adjust as needed to space the cards */
+    width: 80%; /* Adjust the width of the container as needed */
+    z-index: 1; /* Place it above the background image */
+}
+.alert-custom .customer-card .alert-icon {
+  font-size: 24px;
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0; /* Initially hide the icon */
+  transition: opacity 0.3s; /* Add a smooth transition effect */
+}
+.alert-custom .customer-card:hover .alert-icon {
+  opacity: 1; /* Show the icon on hover */
+}
+.alert-custom .customer-card .alert-icon:hover {
+  color: orange;
+}
+.card {
+    flex: 1;
+    max-width: 200px;
+    /* background-color: white; */
+    height: 200px;
+    background-color: transparent;
+    /* margin: 10px; */
+    border: 2px solid #ffffff;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    /* position: relative; */
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, height 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    margin-right: 20px; /* Add space between cards */
+    position: relative;
+    color: white;
+    opacity: 1;
+    box-shadow: -10px 25px 50px black;
+    min-height: 200px;
+}
+
+
+.larger-card {
+  max-width: 300px; 
+  position: relative;
+}
+.card:hover {
+  transform: scale(1.05); /* Enlarge the card on hover */
+  background-color: #ffffff; /* Change background color on hover */
+  color: rgb(72, 146, 207); /* Change text color on hover */
+  height: 270px; /* Change to your desired hover color */
+
+}
+
+.card-content {
+  padding: 20px;
+
+}
+
+
+.h2 { 
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.card p {
+  font-size: 14px; /* Increase font size */
+  color: #ffffff;
+}
+.card:hover p {
+  color: rgb(0, 0, 0); /* Change the text color of <p> on card hover */
+}
+
+
+.card:hover .action-button {
+  opacity: 1; /* Show the button on card hover */
+}
+
+
+.hidden{
+  display: none;
+}
+
+/* ######################################################################### */
+/* Style for the first two cards with two buttons */
+.action-button,
+.show-button {
+  background-color: rgb(72, 146, 207);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px; /* Add spacing between buttons */
+  opacity: 0;
+}
+
+.action-button:hover {
+  background-color: #21364c;
+}
+/* Style for the single-button cards */
+.single-button .action-button {
+    padding: 10px 20px;
+    background-color:  rgb(72, 146, 207);    
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute; 
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+}
+.single-button .action-button:hover{
+  background-color: #21364c;
+}
+.button-container {
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex; /* Add this to make the buttons display in a row */
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; 
+}
+</style>
+
+
+
+
+
