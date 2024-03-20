@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Transfer } from '../interface/transfer';
 import { TransactionService } from '../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './transfer.component.html',
   styleUrls: ['./transfer.component.css']
 })
-export class TransferComponent {
+export class TransferComponent implements OnInit {
   transfer: Transfer ={
     accountA: {
       id: '',
@@ -21,27 +21,23 @@ export class TransferComponent {
     },
     amount: ''
   }
+
   selectedAccountA: Account | undefined;
   selectedAccountB: Account | undefined;
   
 accountIds: number[] = [];
 accounts!: Account[];
-constructor(private transferService : TransactionService ,private toaster : ToastrService, private accountService : AccountService){}
+constructor(private transferService : TransactionService,
+            private toaster : ToastrService,
+            private accountService : AccountService) {}
+
 ngOnInit(): void {
-  this.getAccountIds();
+  this.accountService.accounts$.subscribe(accounts => {
+    this.accounts = accounts;
+  });
 }
-getAccountIds() {
-  this.accountService.getAccount().subscribe(
-    (response: Account[]) => {
-      this.accounts = response;
-      // Extract all account IDs and store them in the accountIds array
-      this.accountIds = this.accounts.map(account =>account.id);
-    },
-    (error: HttpErrorResponse) => {
-      console.error(error.message);
-    }
-  );
-}
+
+
 PerformTransfer()
 {
   this.transferService.addTransfer(this.transfer).subscribe(

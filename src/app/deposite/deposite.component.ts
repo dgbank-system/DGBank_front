@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Deposite_Withdraw } from '../interface/deposite&withdraw';
 import { TransactionService } from '../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './deposite.component.html',
   styleUrls: ['./deposite.component.css']
 })
-export class DepositeComponent {
+export class DepositeComponent implements OnInit {
 deposite : Deposite_Withdraw ={
   accountA: {
     id: ''
@@ -22,21 +22,13 @@ selectedAccount: Account | undefined// Initialize it with an appropriate data ty
 accountIds: number[] = [];
 accounts!: Account[];
 constructor(private transferService : TransactionService ,private toaster : ToastrService , private accountService :AccountService){}
+
 ngOnInit(): void {
-  this.getAccountIds();
+  this.accountService.accounts$.subscribe(accounts => {
+    this.accounts = accounts;
+  });
 }
-getAccountIds() {
-  this.accountService.getAccount().subscribe(
-    (response: Account[]) => {
-      this.accounts = response;
-      // Extract all account IDs and store them in the accountIds array
-      this.accountIds = this.accounts.map(account =>account.id);
-    },
-    (error: HttpErrorResponse) => {
-      console.error(error.message);
-    }
-  );
-}
+
 performDeposite()
 {
   this.transferService.addDeposite(this.deposite).subscribe(

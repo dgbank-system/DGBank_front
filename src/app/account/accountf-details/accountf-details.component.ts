@@ -18,7 +18,7 @@ export class AccountfDetailsComponent implements OnInit{
   
   public getAccounts()
   {
-    this.accountService.getAccount().subscribe(
+    this.accountService.getAccounts().subscribe(
       (response : Account[]) =>
       {
         this.accounts = response

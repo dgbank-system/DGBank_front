@@ -1,14 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-performance-tran',
   templateUrl: './performance-tran.component.html',
   styleUrls: ['./performance-tran.component.css']
 })
-export class PerformanceTranComponent {
+export class PerformanceTranComponent implements OnInit {
   buttonDescription = "Here is our services in DGBank";
-  constructor(private router: Router){}
+
+  constructor(private router: Router ,
+               private accountService : AccountService){}
+
+  ngOnInit(): void {
+    this.accountService.fetchAccounts();
+  }
+  
   updateDescription(description: string) 
   {
     if(description === "transfer")

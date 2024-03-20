@@ -33,4 +33,10 @@ export class TransactionService {
   {
     return this.http.post<Transaction>(`${this.apiUrl}/transaction/withdraw`,withdraw)
   }
+
+  public addWithdraw2(id? : number , amount? : number) : Observable<Transaction>
+  {
+    const url  = `${this.apiUrl}/transaction/withdraw?id=${id}&amount=${amount}`
+    return this.http.post<Transaction>(url,null);
+  }
 }

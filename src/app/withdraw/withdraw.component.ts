@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Deposite_Withdraw } from '../interface/deposite&withdraw';
 import { TransactionService } from '../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,40 +12,36 @@ import { Type } from '../enum/typeEnum';
   templateUrl: './withdraw.component.html',
   styleUrls: ['./withdraw.component.css']
 })
-export class WithdrawComponent {
-withdraw : Deposite_Withdraw ={
-  accountA: {
-    id: ''
-  },
-  amount: ''
-}
-selectedAccount: Account | undefined// Initialize it with an appropriate data type
-accountIds: number[] = [];
+export class WithdrawComponent implements OnInit {
+// withdraw : Deposite_Withdraw ={
+//   accountA: {
+//     id: ''
+//   },
+//   amount: ''
+// }
+
+amount : number | undefined;
+selectedAccount: Account | undefined ;
 accountfNames : String[] = [];
 accountlNames : String[] = []
 accounts!: Account[];
+selectedAccountId: number = 0;
 
-constructor(private transactionSrevice : TransactionService , private toaster : ToastrService, private accountService : AccountService){}
+constructor(private transactionSrevice : TransactionService ,
+            private toaster : ToastrService,
+            private accountService : AccountService){}
+
 ngOnInit(): void {
-  this.getAccountIds();
+  this.accountService.accounts$.subscribe(accounts => {
+    this.accounts = accounts;
+  });
+  this.selectedAccountId = 0;
 }
-getAccountIds() {
-  this.accountService.getAccount().subscribe(
-    (response: Account[]) => {
-      this.accounts = response;
-      this.accountfNames = this.accounts.map(account => account.customerFirstName)
-      this.accountlNames = this.accounts.map(account => account.customerLastName)
-      // Extract all account IDs and store them in the accountIds array
-      this.accountIds = this.accounts.map(account =>account.id);
-    },
-    (error: HttpErrorResponse) => {
-      console.error(error.message);
-    }
-  );
-}
+
+
 performWithdraw()
 {
-  this.transactionSrevice.addWithdraw(this.withdraw).subscribe(
+  this.transactionSrevice.addWithdraw2(this.selectedAccount?.id , this.amount ).subscribe(
     (response : any) => 
     {
       const msg = response.description
@@ -64,11 +60,14 @@ performWithdraw()
     }
   )
 }
-onAccountChange(event: any) {
-  // Find the selected account by its ID
-  const selectedAccountId = Number(this.withdraw.accountA.id);
-  this.selectedAccount = this.accounts.find(account => account.id === selectedAccountId);
-}
+  onAccountChange(event: any) {
+    console.log(event.target.value);
+    const selectedAccountIdNumber = Number(event.target.value);
+  
+    // Find the selected account by its ID
+    this.selectedAccount = this.accounts.find(account => account.id === selectedAccountIdNumber);
+
+  }
 
 
 }
