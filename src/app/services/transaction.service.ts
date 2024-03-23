@@ -19,22 +19,21 @@ export class TransactionService {
     return this.http.get<Transaction[]>(`${this.apiUrl}/transaction/all`);
   }
 
-  public addTransfer(transfer : Transfer) : Observable<Transaction>
+  public addTransfer(id1? : number ,id2? : number , amount? : number) : Observable<Transaction>
   {
-    return this.http.post<Transaction>(`${this.apiUrl}/transaction/transfer`,transfer);
+    const url  = `${this.apiUrl}/transaction/transfer?id1=${id1}&id2=${id2}&amount=${amount}`
+    return this.http.post<Transaction>(url,null);
   }
 
-  public addDeposite(deposite : Deposite_Withdraw) : Observable<Transaction>
+  public addDeposite(id? : number , amount? : number) : Observable<Transaction>
   {
-    return this.http.post<Transaction>(`${this.apiUrl}/transaction/deposite`,deposite)
+    const url  = `${this.apiUrl}/transaction/deposite?id=${id}&amount=${amount}`
+    return this.http.post<Transaction>(url,null);
   }
   
-  public addWithdraw(withdraw : Deposite_Withdraw) : Observable<Transaction>
-  {
-    return this.http.post<Transaction>(`${this.apiUrl}/transaction/withdraw`,withdraw)
-  }
 
-  public addWithdraw2(id? : number , amount? : number) : Observable<Transaction>
+
+  public addWithdraw(id? : number , amount? : number) : Observable<Transaction>
   {
     const url  = `${this.apiUrl}/transaction/withdraw?id=${id}&amount=${amount}`
     return this.http.post<Transaction>(url,null);

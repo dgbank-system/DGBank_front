@@ -1,21 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { AccountService } from '../services/account.service';
+import { Component } from '@angular/core';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-performance-tran',
   templateUrl: './performance-tran.component.html',
   styleUrls: ['./performance-tran.component.css']
 })
-export class PerformanceTranComponent implements OnInit {
+export class PerformanceTranComponent  {
   buttonDescription = "Here is our services in DGBank";
 
-  constructor(private router: Router ,
-               private accountService : AccountService){}
+  constructor(private router: Router ,){}
 
-  ngOnInit(): void {
-    this.accountService.fetchAccounts();
-  }
+
   
   updateDescription(description: string) 
   {
@@ -39,21 +35,23 @@ export class PerformanceTranComponent implements OnInit {
     this.buttonDescription = "Here is our services in DGBank";
   }
 
-navigateToTransfer()
-{
-  this.router.navigate(['/transfer']);
-}
+  navigateToTransfer()
+  {
+    this.router.navigate(['/transfer']);
+  }
 
-navigateToDeposite()
-{
-  this.router.navigate(['/deposite']);
-}
-navigateToWithdraw()
-{
-  this.router.navigate(['/withdraw']);
-}
-navigateTorule()
-{
-  this.router.navigate(['/rule']);
-}
+  navigateToDeposite()
+  {
+    this.router.navigate(['/deposite']);
+  }
+
+  navigateToWithdraw()
+  {
+    this.router.navigate(['/withdraw']);
+  }
+
+  navigateTorule()
+  {
+    this.router.navigate(['/rule']);
+  }
 }

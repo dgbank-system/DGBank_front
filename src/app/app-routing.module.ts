@@ -10,9 +10,9 @@ import { AccountfFormComponent } from './account/accountf-form/accountf-form.com
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AccountfDetailsComponent } from './account/accountf-details/accountf-details.component';
 import { PerformanceTranComponent } from './performance-tran/performance-tran.component';
-import { TransferComponent } from './transfer/transfer.component';
-import { DepositeComponent } from './deposite/deposite.component';
-import { WithdrawComponent } from './withdraw/withdraw.component';
+import { TransferComponent } from './performance-tran/transfer/transfer.component';
+import { DepositeComponent } from './performance-tran/deposite/deposite.component';
+import { WithdrawComponent } from './performance-tran/withdraw/withdraw.component';
 import { AlertComponent } from './alert/alert.component';
 import { RuleComponent } from './rule/rule.component';
 const routes: Routes = [
@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'deposite' , component : DepositeComponent},
   { path : 'withdraw' , component :WithdrawComponent },
   { path : 'alert' , component: AlertComponent},
-  { path : 'rule' , component:RuleComponent}
+  { path : 'rule' , component:RuleComponent},
 ];
 
 
@@ -39,3 +39,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

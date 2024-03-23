@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Transfer } from '../interface/transfer';
-import { TransactionService } from '../services/transaction.service';
+import { Transfer } from '../../interface/transfer';
+import { TransactionService } from '../../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
-import { Account } from '../interface/account';
-import { AccountService } from '../services/account.service';
+import { Account } from '../../interface/account';
+import { AccountService } from '../../services/account.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SharingService } from 'src/app/services/sharingService.service';
 
 @Component({
   selector: 'app-transfer',
@@ -12,16 +13,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./transfer.component.css']
 })
 export class TransferComponent implements OnInit {
-  transfer: Transfer ={
-    accountA: {
-      id: '',
-    },
-    accountB: {
-      id: ''
-    },
-    amount: ''
-  }
 
+  amount : number | undefined;
+  selectedAccountAId : number = 0;
+  selectedAccountBId : number = 0;
   selectedAccountA: Account | undefined;
   selectedAccountB: Account | undefined;
   
@@ -29,18 +24,26 @@ accountIds: number[] = [];
 accounts!: Account[];
 constructor(private transferService : TransactionService,
             private toaster : ToastrService,
-            private accountService : AccountService) {}
+            private accountService : AccountService ,
+            private sharingService : SharingService ) {}
 
-ngOnInit(): void {
-  this.accountService.accounts$.subscribe(accounts => {
-    this.accounts = accounts;
-  });
-}
+  ngOnInit(): void {
+    const data = this.sharingService.getUserSettings();
+    if(data != null)
+    {
+        this.accounts = data;
+    } else
+    {
+    this.accountService.fetchAccounts().subscribe(accounts => {
+      this.accounts = accounts;
+    });
+    }
+  }
 
 
 PerformTransfer()
 {
-  this.transferService.addTransfer(this.transfer).subscribe(
+  this.transferService.addTransfer(this.selectedAccountA?.id , this.selectedAccountB?.id , this.amount).subscribe(
     (response : any) => 
     {
       const msg = response.description
@@ -62,10 +65,10 @@ PerformTransfer()
 onAccountChange(accountType: string) {
  
   if (accountType === 'accountA') {
-    const selectedAccountId = Number(this.transfer.accountA.id);
+    const selectedAccountId = Number(this.selectedAccountAId);
     this.selectedAccountA = this.accounts.find(account => account.id === selectedAccountId);
   } else if (accountType === 'accountB') {
-    const selectedAccountId = Number(this.transfer.accountB.id);
+    const selectedAccountId = Number(this.selectedAccountBId);
     this.selectedAccountB = this.accounts.find(account => account.id === selectedAccountId);
   }
 }

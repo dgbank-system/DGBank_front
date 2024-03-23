@@ -65,15 +65,15 @@
                         <h3 class="font-weight-bold text-center" style="color: #37a4cc;">Deposite Money</h3>
                         <div class="row register-form">
                             <div class="mb-3">
-                                <select [(ngModel)]="deposite.accountA.id" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange($event)">
-                                    <option value="">Select an Account</option>
+                                <select [(ngModel)]="selectedAccountId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange($event)">
+                                    <option value=0>Select an Account</option>
                                     <option *ngFor= "let account of accounts" [value]="account.id">
                                         {{ account.id }} -  {{ account.customerFirstName }} {{ account.customerLastName }}
                                       </option>
                                   </select>
                             </div>
                             <div class="mb-3">
-                                <input type="number" [(ngModel)]="deposite.amount" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Amount" />
+                                <input type="number" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Amount" />
                             </div>
                             <button type="button" class="btn btn-primary" (click)="performDeposite()" >Perform</button>
                         </div>
