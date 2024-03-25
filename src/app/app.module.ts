@@ -1,6 +1,5 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
@@ -19,10 +18,6 @@ import { AccountfDetailsComponent } from './account/accountf-details/accountf-de
 import { TransactionsComponent } from './transactions/transactions.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
-import { PerformanceTranComponent } from './performance-tran/performance-tran.component';
-import { TransferComponent } from './performance-tran/transfer/transfer.component';
-import { DepositeComponent } from './performance-tran/deposite/deposite.component';
-import { WithdrawComponent } from './performance-tran/withdraw/withdraw.component';
 import { AlertComponent } from './alert/alert.component';
 import { RuleComponent } from './rule/rule.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -40,10 +35,6 @@ import { environment } from 'src/environments/environment.development';
     AccountfFormComponent,
     AccountfDetailsComponent,
     TransactionsComponent,
-    PerformanceTranComponent,
-    TransferComponent,
-    DepositeComponent,
-    WithdrawComponent,
     AlertComponent,
     RuleComponent,
     

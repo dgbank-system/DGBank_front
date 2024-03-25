@@ -11,7 +11,7 @@ import { SharingService } from './sharingService.service';
 export class AccountService {
   private apiUrl = environment.apiBaseUrl;
  
-  private accountsSubject = new BehaviorSubject<Account[]>([]);
+  private accountsSubject = new BehaviorSubject<number[]>([]);
   accounts$ = this.accountsSubject.asObservable();
 
 
@@ -23,10 +23,10 @@ export class AccountService {
     return this.http.get<Account[]>(`${this.apiUrl}/account/all`);
   }
 
-  public fetchAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.apiUrl}/account/all`).pipe(
-      tap((accounts: Account[]) => {
-        this.updateAccounts(accounts);
+  public fetchIDAccounts(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/account/ids`).pipe(
+      tap((ids: number[]) => {
+        this.updateAccounts(ids);
       }),
       catchError(error => {
         console.error('Error fetching accounts:', error);
@@ -40,10 +40,12 @@ export class AccountService {
     return this.http.post<Account>(`${this.apiUrl}/account/add`,account)
   }
 
-  private updateAccounts(accounts: Account[]): void {
-   
-   
-    this.accountsSubject.next(accounts);
-    this.sharingService.setSettings(accounts); // Save accounts using SharingService
+  private updateAccounts(ids: number[]): void {
+    this.accountsSubject.next(ids);
+    this.sharingService.setStorage(ids); 
+  }
+
+  getAccountById(id: number): Observable<Account> {
+    return this.http.get<Account>(`${this.apiUrl}/account/find/${id}`);
   }
 }

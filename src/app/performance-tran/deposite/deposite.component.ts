@@ -18,6 +18,7 @@ export class DepositeComponent implements OnInit {
   selectedAccount: Account | undefined// Initialize it with an appropriate data type
   accountIds: number[] = [];
   accounts!: Account[];
+  balance : number | undefined ;
 
   constructor(private transferService : TransactionService ,
               private toaster : ToastrService ,
@@ -25,14 +26,14 @@ export class DepositeComponent implements OnInit {
               private sharingService : SharingService ){}
 
   ngOnInit(): void {
-    const data = this.sharingService.getUserSettings();
+    const data = this.sharingService.getStorage();
     if(data != null)
     {
-        this.accounts = data;
+        this.accountIds = data;
     } else
     {
-    this.accountService.fetchAccounts().subscribe(accounts => {
-      this.accounts = accounts;
+    this.accountService.fetchIDAccounts().subscribe(ids => {
+      this.accountIds = ids;
     });
   }
   }
@@ -42,7 +43,8 @@ export class DepositeComponent implements OnInit {
     this.transferService.addDeposite(this.selectedAccount?.id , this.amount).subscribe(
       (response : any) => 
       {
-        const msg = response.description
+        const msg = response.description;
+        this.balance = response.balance;
         if(response.status === "Successful")
         {
           this.toaster.success(msg)
@@ -60,10 +62,17 @@ export class DepositeComponent implements OnInit {
     )
   }
 
-  onAccountChange(event: any) {
+    onAccountChange() {
     // Find the selected account by its ID
-    const selectedAccountId = Number(this.selectedAccountId);
-    this.selectedAccount = this.accounts.find(account => account.id === selectedAccountId);
+    this.accountService.getAccountById(this.selectedAccountId).subscribe(
+      (account: Account) => {
+        this.selectedAccount = account;
+        this.balance = this.selectedAccount.balance;
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+     )
   }
 
 

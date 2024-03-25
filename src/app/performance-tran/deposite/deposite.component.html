@@ -65,10 +65,10 @@
                         <h3 class="font-weight-bold text-center" style="color: #37a4cc;">Deposite Money</h3>
                         <div class="row register-form">
                             <div class="mb-3">
-                                <select [(ngModel)]="selectedAccountId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange($event)">
+                                <select [(ngModel)]="selectedAccountId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange()">
                                     <option value=0>Select an Account</option>
-                                    <option *ngFor= "let account of accounts" [value]="account.id">
-                                        {{ account.id }} -  {{ account.customerFirstName }} {{ account.customerLastName }}
+                                    <option *ngFor=  "let accountId of accountIds" [value]="accountId">
+                                        {{ accountId }} 
                                       </option>
                                   </select>
                             </div>
@@ -88,7 +88,7 @@
             <div class="card-body">
               <h4 class="font-weight-bold text-center" style="color: black;">Selected Account Information</h4>
               <p>Account Holder's Name: {{ selectedAccount.customerFirstName }} {{selectedAccount.customerLastName}}</p>
-              <p>Account Balance: {{ selectedAccount.balance }}$</p>
+              <p>Account Balance: {{ balance }}$</p>
             </div>
           </div>
         </div>

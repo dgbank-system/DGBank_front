@@ -3,9 +3,9 @@ import { Type } from "../enum/typeEnum";
 
 export interface Account{
     id : number ,
-    balance : string ,
+    balance : number ,
     type : Type ,   
     customerid: string;
     customerFirstName : String;
-    customerLastName : string // Reference to the customer who owns this account
+    customerLastName : string 
 }

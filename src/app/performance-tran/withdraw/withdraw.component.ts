@@ -19,8 +19,10 @@ export class WithdrawComponent implements OnInit {
   selectedAccount: Account | undefined ;
   accountfNames : String[] = [];
   accountlNames : String[] = []
-  accounts!: Account[];
+  // accounts!: Account[];
+  accountIds : number[] = [];
   selectedAccountId: number = 0;
+  balance : number | undefined ;
 
   constructor(private transactionSrevice : TransactionService ,
               private toaster : ToastrService,
@@ -28,14 +30,14 @@ export class WithdrawComponent implements OnInit {
               private sharingService : SharingService ){}
 
   ngOnInit(): void {
-    const data = this.sharingService.getUserSettings();
+    const data = this.sharingService.getStorage();
     if(data != null)
     {
-        this.accounts = data;
+        this.accountIds = data;
     } else
     {
-    this.accountService.fetchAccounts().subscribe(accounts => {
-      this.accounts = accounts;
+    this.accountService.fetchIDAccounts().subscribe(ids => {
+      this.accountIds = ids;
     });
   }
   
@@ -48,6 +50,7 @@ export class WithdrawComponent implements OnInit {
       (response : any) => 
       {
         const msg = response.description
+         this.balance = response.balance
         if(response.status === "Successful")
         {
           this.toaster.success(msg)
@@ -63,13 +66,23 @@ export class WithdrawComponent implements OnInit {
       }
     )
   }
-  onAccountChange(event: any) {
-    console.log(event.target.value);
-    const selectedAccountIdNumber = Number(event.target.value);
+
+  onAccountChange() {
+   
   
     // Find the selected account by its ID
-    this.selectedAccount = this.accounts.find(account => account.id === selectedAccountIdNumber);
-
+    console.log(this.selectedAccountId);
+     this.accountService.getAccountById(this.selectedAccountId).subscribe(
+      (account: Account) => {
+        this.selectedAccount = account;
+        this.balance = this.selectedAccount.balance;
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+     )
+      
+   
   }
 
 

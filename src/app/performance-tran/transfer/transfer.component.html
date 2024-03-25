@@ -65,16 +65,16 @@
                             <div class="mb-3">
                                 <select [(ngModel)]="selectedAccountAId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange('accountA')">
                                     <option value=0>Select an Account</option>
-                                    <option *ngFor= "let account of accounts" [value]="account.id">
-                                        {{ account.id }} -  {{ account.customerFirstName }} {{ account.customerLastName }}
+                                    <option *ngFor= "let accountId of accountIds" [value]="accountId">
+                                        {{ accountId }} 
                                       </option>
                                   </select>
                             </div>
                             <div class="mb-3">
                                 <select [(ngModel)]="selectedAccountBId" [ngModelOptions]="{ standalone: true }" class="form-control" (change)="onAccountChange('accountB')">
                                     <option value=0>Select an Account</option>
-                                    <option *ngFor= "let account of accounts" [value]="account.id">
-                                        {{ account.id }} -  {{ account.customerFirstName }} {{ account.customerLastName }}
+                                    <option *ngFor= "let accountId of accountIds" [value]="accountId">
+                                        {{ accountId }} 
                                       </option>
                                   </select>
                             </div>

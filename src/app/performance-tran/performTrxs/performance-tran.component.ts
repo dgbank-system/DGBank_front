@@ -37,17 +37,17 @@ export class PerformanceTranComponent  {
 
   navigateToTransfer()
   {
-    this.router.navigate(['/transfer']);
+    this.router.navigate(['services/transfer']);
   }
 
   navigateToDeposite()
   {
-    this.router.navigate(['/deposite']);
+    this.router.navigate(['services/deposite']);
   }
 
   navigateToWithdraw()
   {
-    this.router.navigate(['/withdraw']);
+    this.router.navigate(['services/withdraw']);
   }
 
   navigateTorule()

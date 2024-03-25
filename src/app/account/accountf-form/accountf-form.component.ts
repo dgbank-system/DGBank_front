@@ -15,7 +15,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 export class AccountfFormComponent implements OnInit {
 account :Account = {
   id: 0,
-  balance: '',
+  balance: 0,
   type: Type.CHECKING,
   customerid: '',
   customerFirstName: '',

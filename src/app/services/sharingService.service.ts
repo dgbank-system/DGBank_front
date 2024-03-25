@@ -1,50 +1,32 @@
 import { Injectable } from '@angular/core';
-import { deflate, inflate } from 'pako';
+import * as pako from 'pako';
 @Injectable({
   providedIn: 'root'
 })
 export class SharingService {
-  private storageName: string = "Settings";
+  private storageName: string = "Saved Ids";
 
   constructor() { }
 
-  setSettings(data: any): void {
-    // Serialize the data to a JSON string before compressing
-    const serializedData = JSON.stringify(data);
-    const serializedArrayUint8 = new TextEncoder().encode(serializedData);
 
-    // Compress the serialized data
-    const compressedData = deflate(serializedArrayUint8);
-    const compressedDataArray = Array.from(compressedData);
-    const compressedDataString = btoa(String.fromCharCode.apply(null, compressedDataArray));
-
-    // Store the compressed data in localStorage
+  setStorage(data: any): void {
+    // Serialize the data to a JSON string before storing it
+    const compressedDataString = this.compressData(data);
     localStorage.setItem(this.storageName, compressedDataString);
   }
   
-  getUserSettings(): any | null {
-    // Retrieve the compressed data string from localStorage
+  getStorage(): any {
+    // Retrieve the serialized data from localStorage
     const compressedDataString = localStorage.getItem(this.storageName);
-  
-    if (compressedDataString) {
-      // Convert the Base64-encoded string back to an array of numbers
-      const compressedDataArray = atob(compressedDataString).split('').map(char => char.charCodeAt(0));
-  
-      // Convert the array of numbers to a Uint8Array
-      const compressedDataUint8 = new Uint8Array(compressedDataArray);
-  
-      // Decompress the compressed data
-      const decompressedDataUint8 = inflate(compressedDataUint8);
-  
-      // Convert the decompressed data to a string
-      const decompressedDataString = new TextDecoder().decode(decompressedDataUint8);
-  
-      // Deserialize the JSON string back to its original form
-      return JSON.parse(decompressedDataString);
-    } else {
-      return null;
-    }
+
+      if (compressedDataString) {
+        return this.decompressData(compressedDataString);
+      } else {
+        return null;
+      }
   }
+
+  
   
   
   clearUserSettings() {
@@ -54,6 +36,22 @@ export class SharingService {
   cleanAll() {
     localStorage.clear()
   }
+
+
+  compressData(data: any): string {
+    const dataString = JSON.stringify(data);
+    const compressedData = pako.deflate(dataString);
+    const compressedDataString = btoa(String.fromCharCode.apply(null, Array.from(compressedData)));
+    return compressedDataString;
+  }
+  
+  // Function to decompress Base64 string and return data
+   decompressData(compressedDataString: string): any {
+    const compressedDataUint8 = Uint8Array.from(atob(compressedDataString), c => c.charCodeAt(0));
+    const decompressedDataString = pako.inflate(compressedDataUint8, { to: 'string' });
+    return JSON.parse(decompressedDataString);
+  }
+
 
 
 }

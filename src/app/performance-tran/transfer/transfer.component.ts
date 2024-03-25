@@ -15,63 +15,73 @@ import { SharingService } from 'src/app/services/sharingService.service';
 export class TransferComponent implements OnInit {
 
   amount : number | undefined;
-  selectedAccountAId : number = 0;
-  selectedAccountBId : number = 0;
+  selectedAccountAId : number =0;
+  selectedAccountBId : number =0;
   selectedAccountA: Account | undefined;
   selectedAccountB: Account | undefined;
-  
-accountIds: number[] = [];
-accounts!: Account[];
-constructor(private transferService : TransactionService,
-            private toaster : ToastrService,
-            private accountService : AccountService ,
-            private sharingService : SharingService ) {}
+  balance: number = 0;
+  accountIds: number[] = [];
+  accounts!: Account[];
+
+  constructor(private transferService : TransactionService,
+              private toaster : ToastrService,
+              private accountService : AccountService ,
+              private sharingService : SharingService ) {}
 
   ngOnInit(): void {
-    const data = this.sharingService.getUserSettings();
+
+    const data = this.sharingService.getStorage();
     if(data != null)
     {
-        this.accounts = data;
+        this.accountIds = data;
     } else
     {
-    this.accountService.fetchAccounts().subscribe(accounts => {
-      this.accounts = accounts;
+    this.accountService.fetchIDAccounts().subscribe(ids => {
+      this.accountIds = ids;
     });
     }
+
   }
 
 
-PerformTransfer()
-{
-  this.transferService.addTransfer(this.selectedAccountA?.id , this.selectedAccountB?.id , this.amount).subscribe(
-    (response : any) => 
-    {
-      const msg = response.description
-      if( response.status === "Successful")
+  PerformTransfer()
+  {
+    this.transferService.addTransfer(this.selectedAccountA?.id , this.selectedAccountB?.id , this.amount).subscribe(
+      (response : any) => 
       {
-        this.toaster.success(msg)
+        const msg = response.description
+        if( response.status === "Successful")
+        {
+          this.toaster.success(msg)
+        }
+        else{
+          this.toaster.error(msg)
+        }
+      },
+      (error) => 
+      {
+        const message = error.error.message
+        this.toaster.error(message)
       }
-      else{
-        this.toaster.error(msg)
-      }
-    },
-    (error) => 
-    {
-      const message = error.error.message
-      this.toaster.error(message)
-    }
-  )
-}
-onAccountChange(accountType: string) {
- 
-  if (accountType === 'accountA') {
-    const selectedAccountId = Number(this.selectedAccountAId);
-    this.selectedAccountA = this.accounts.find(account => account.id === selectedAccountId);
-  } else if (accountType === 'accountB') {
-    const selectedAccountId = Number(this.selectedAccountBId);
-    this.selectedAccountB = this.accounts.find(account => account.id === selectedAccountId);
+    )
   }
-}
-
+  onAccountChange(accountType: string) {
+  
+    if (accountType === 'accountA') {
+      // this.accountService.getAccountById(this.selectedAccountAId).subscribe(
+      //   (account: Account) => {
+      //     this.selectedAccountA = account;
+      //     this.balance = this.selectedAccountA.balance;
+      //   },
+      //   (error) => {
+      //     console.error('Error:', error);
+      //   }
+      //  )
+      
+    } else if (accountType === 'accountB') {
+      
+    
+  }
+  }
 
 }

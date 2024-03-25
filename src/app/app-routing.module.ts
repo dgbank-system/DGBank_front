@@ -3,16 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import { CustomerComponent } from './customer/customer.component';
 import { CustomerFormComponent } from './customer/customer-form/customer-form.component';
 import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
 import { AccountfFormComponent } from './account/accountf-form/accountf-form.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AccountfDetailsComponent } from './account/accountf-details/accountf-details.component';
-import { PerformanceTranComponent } from './performance-tran/performance-tran.component';
-import { TransferComponent } from './performance-tran/transfer/transfer.component';
-import { DepositeComponent } from './performance-tran/deposite/deposite.component';
-import { WithdrawComponent } from './performance-tran/withdraw/withdraw.component';
 import { AlertComponent } from './alert/alert.component';
 import { RuleComponent } from './rule/rule.component';
 const routes: Routes = [
@@ -25,10 +20,11 @@ const routes: Routes = [
   { path : 'addAccount' , component: AccountfFormComponent},
   { path : 'transactions' , component: TransactionsComponent},
   { path : 'showAccount' , component: AccountfDetailsComponent},
-  { path : 'services' , component : PerformanceTranComponent},
-  { path : 'transfer' , component :TransferComponent},
-  { path: 'deposite' , component : DepositeComponent},
-  { path : 'withdraw' , component :WithdrawComponent },
+
+  { 
+    path: 'services', 
+    loadChildren: () => import('./performance-tran/performance-tran.module').then(m => m.PerformanceTranModule) 
+  },
   { path : 'alert' , component: AlertComponent},
   { path : 'rule' , component:RuleComponent},
 ];
