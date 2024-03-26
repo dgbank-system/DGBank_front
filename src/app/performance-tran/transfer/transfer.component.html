@@ -65,17 +65,17 @@
                             <div class="mb-3">
                                 <select [(ngModel)]="selectedAccountAId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange('accountA')">
                                     <option value=0>Select an Account</option>
-                                    <option *ngFor= "let accountId of accountIds" [value]="accountId">
-                                        {{ accountId }} 
-                                      </option>
+                                    <option *ngFor="let account of accounts$ | async" [value]="account.id">
+                                        {{ account.id }} - {{ account.customerFirstName }} {{ account.customerLastName }}
+                                    </option>
                                   </select>
                             </div>
                             <div class="mb-3">
                                 <select [(ngModel)]="selectedAccountBId" [ngModelOptions]="{ standalone: true }" class="form-control" (change)="onAccountChange('accountB')">
                                     <option value=0>Select an Account</option>
-                                    <option *ngFor= "let accountId of accountIds" [value]="accountId">
-                                        {{ accountId }} 
-                                      </option>
+                                    <option *ngFor="let account of accounts$ | async" [value]="account.id">
+                                        {{ account.id }} - {{ account.customerFirstName }} {{ account.customerLastName }}
+                                    </option>
                                   </select>
                             </div>
                             <div class="mb-3">
@@ -95,7 +95,7 @@
             <div class="card-body">
               <h4 class="font-weight-bold text-center" style="color: black;">Selected Account Information ({{selectedAccountA.id}})</h4>
               <p>Account Holder's Name: {{ selectedAccountA.customerFirstName }} {{ selectedAccountA.customerLastName }}</p>
-              <p>Account Balance: {{ selectedAccountA.balance }}$</p>
+              <p>Account Balance: {{  balance  ?  balance : selectedAccountA.balance }}$</p>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
             <div class="card-body">
               <h4 class="font-weight-bold text-center" style="color: black;">Selected Account Information ({{selectedAccountB.id}})</h4>
               <p>Account Holder's Name: {{ selectedAccountB.customerFirstName }} {{ selectedAccountB.customerLastName }}</p>
-              <p>Account Balance: {{ selectedAccountB.balance }}$</p>
+              <p>Account Balance: {{  balance  ?  balance : selectedAccountB.balance }}$</p>
             </div>
           </div>
         </div>

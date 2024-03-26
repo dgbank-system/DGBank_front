@@ -11,7 +11,7 @@ import { SharingService } from './sharingService.service';
 export class AccountService {
   private apiUrl = environment.apiBaseUrl;
  
-  private accountsSubject = new BehaviorSubject<number[]>([]);
+  private accountsSubject = new BehaviorSubject<Account[]>([]);
   accounts$ = this.accountsSubject.asObservable();
 
 
@@ -23,15 +23,9 @@ export class AccountService {
     return this.http.get<Account[]>(`${this.apiUrl}/account/all`);
   }
 
-  public fetchIDAccounts(): Observable<number[]> {
-    return this.http.get<number[]>(`${this.apiUrl}/account/ids`).pipe(
-      tap((ids: number[]) => {
-        this.updateAccounts(ids);
-      }),
-      catchError(error => {
-        console.error('Error fetching accounts:', error);
-        return throwError(error); // Rethrow the error to the calling code
-      })
+  public fetchAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.apiUrl}/account/all/Trxs`).pipe(
+      tap(accounts => this.accountsSubject.next(accounts))
     );
   }
 
@@ -40,9 +34,15 @@ export class AccountService {
     return this.http.post<Account>(`${this.apiUrl}/account/add`,account)
   }
 
-  private updateAccounts(ids: number[]): void {
-    this.accountsSubject.next(ids);
-    this.sharingService.setStorage(ids); 
+  updateBalance(accountId: number | undefined, newBalance: number): void {
+    const accounts = this.accountsSubject.getValue();
+    const updatedAccounts = accounts.map(account => {
+      if (account.id == accountId) {
+        return { ...account, balance: newBalance };
+      }
+      return account;
+    });
+    this.accountsSubject.next(updatedAccounts);
   }
 
   getAccountById(id: number): Observable<Account> {

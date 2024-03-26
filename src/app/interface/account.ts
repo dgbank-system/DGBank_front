@@ -3,7 +3,7 @@ import { Type } from "../enum/typeEnum";
 
 export interface Account{
     id : number ,
-    balance : number ,
+    balance? : number ,
     type : Type ,   
     customerid: string;
     customerFirstName : String;

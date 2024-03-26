@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
 import { SharingService } from 'src/app/services/sharingService.service';
+import { Observable, map } from 'rxjs';
 
 
 @Component({
@@ -17,25 +18,24 @@ export class DepositeComponent implements OnInit {
   selectedAccountId : number = 0 ;
   selectedAccount: Account | undefined// Initialize it with an appropriate data type
   accountIds: number[] = [];
-  accounts!: Account[];
+  accounts$: Observable<Account[]> | undefined;
   balance : number | undefined ;
 
   constructor(private transferService : TransactionService ,
               private toaster : ToastrService ,
-              private accountService :AccountService,
-              private sharingService : SharingService ){}
+              private accountService :AccountService){}
 
   ngOnInit(): void {
-    const data = this.sharingService.getStorage();
-    if(data != null)
-    {
-        this.accountIds = data;
-    } else
-    {
-    this.accountService.fetchIDAccounts().subscribe(ids => {
-      this.accountIds = ids;
+
+    this.accounts$ = this.accountService.accounts$;
+
+    // Check if accountsSubject has emitted any data
+    this.accountService.accounts$.subscribe(accounts => {
+      if (accounts.length === 0) {
+        // Fetch accounts from the server if accountsSubject is empty
+        this.accountService.fetchAccounts().subscribe();
+      }
     });
-  }
   }
 
   performDeposite()
@@ -44,7 +44,7 @@ export class DepositeComponent implements OnInit {
       (response : any) => 
       {
         const msg = response.description;
-        this.balance = response.balance;
+        this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
         if(response.status === "Successful")
         {
           this.toaster.success(msg)
@@ -63,17 +63,17 @@ export class DepositeComponent implements OnInit {
   }
 
     onAccountChange() {
-    // Find the selected account by its ID
-    this.accountService.getAccountById(this.selectedAccountId).subscribe(
-      (account: Account) => {
-        this.selectedAccount = account;
-        this.balance = this.selectedAccount.balance;
-      },
-      (error) => {
-        console.error('Error:', error);
-      }
-     )
-  }
+ 
+    
+      this.accounts$?.subscribe(accounts => {
+          accounts.forEach(account => {
+              if (account.id == this.selectedAccountId) {
+                  this.selectedAccount = account;
+              }
+          });
+      });
+      
+    }
 
 
 

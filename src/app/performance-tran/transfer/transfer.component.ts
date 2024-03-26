@@ -6,6 +6,7 @@ import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SharingService } from 'src/app/services/sharingService.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-transfer',
@@ -19,28 +20,25 @@ export class TransferComponent implements OnInit {
   selectedAccountBId : number =0;
   selectedAccountA: Account | undefined;
   selectedAccountB: Account | undefined;
-  balance: number = 0;
+  balance : number | undefined ;
   accountIds: number[] = [];
-  accounts!: Account[];
+  accounts$: Observable<Account[]> | undefined;
 
   constructor(private transferService : TransactionService,
               private toaster : ToastrService,
-              private accountService : AccountService ,
-              private sharingService : SharingService ) {}
+              private accountService : AccountService) {}
 
   ngOnInit(): void {
 
-    const data = this.sharingService.getStorage();
-    if(data != null)
-    {
-        this.accountIds = data;
-    } else
-    {
-    this.accountService.fetchIDAccounts().subscribe(ids => {
-      this.accountIds = ids;
-    });
-    }
+    this.accounts$ = this.accountService.accounts$;
 
+    // Check if accountsSubject has emitted any data
+    this.accountService.accounts$.subscribe(accounts => {
+      if (accounts.length === 0) {
+        // Fetch accounts from the server if accountsSubject is empty
+        this.accountService.fetchAccounts().subscribe();
+      }
+    });
   }
 
 
@@ -50,6 +48,9 @@ export class TransferComponent implements OnInit {
       (response : any) => 
       {
         const msg = response.description
+        this.accountService.updateBalance(this.selectedAccountA?.id, response.balanceA);
+        this.accountService.updateBalance(this.selectedAccountB?.id, response.balanceB);
+        
         if( response.status === "Successful")
         {
           this.toaster.success(msg)
@@ -68,18 +69,22 @@ export class TransferComponent implements OnInit {
   onAccountChange(accountType: string) {
   
     if (accountType === 'accountA') {
-      // this.accountService.getAccountById(this.selectedAccountAId).subscribe(
-      //   (account: Account) => {
-      //     this.selectedAccountA = account;
-      //     this.balance = this.selectedAccountA.balance;
-      //   },
-      //   (error) => {
-      //     console.error('Error:', error);
-      //   }
-      //  )
+      this.accounts$?.subscribe(accounts => {
+        accounts.forEach(account => {
+            if (account.id == this.selectedAccountAId) {
+                this.selectedAccountA = account;   
+            }
+        });
+    });
       
     } else if (accountType === 'accountB') {
-      
+      this.accounts$?.subscribe(accounts => {
+        accounts.forEach(account => {
+            if (account.id == this.selectedAccountBId) {
+                this.selectedAccountB = account; 
+            }
+        });
+    });
     
   }
   }
