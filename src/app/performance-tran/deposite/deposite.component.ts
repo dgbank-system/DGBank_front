@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TransactionService } from '../../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
 import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
-import { SharingService } from 'src/app/services/sharingService.service';
-import { Observable, map } from 'rxjs';
-
+import { Observable } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-deposite',
@@ -23,7 +22,9 @@ export class DepositeComponent implements OnInit {
 
   constructor(private transferService : TransactionService ,
               private toaster : ToastrService ,
-              private accountService :AccountService){}
+              private accountService :AccountService,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService){}
 
   ngOnInit(): void {
 
@@ -45,12 +46,11 @@ export class DepositeComponent implements OnInit {
       {
         const msg = response.description;
         this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
-        if(response.status === "Successful")
-        {
-          this.toaster.success(msg)
-        }
-        else{
-          this.toaster.error(msg)
+        this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
+        if (response.status === "Successful") {
+            this.messageService.add({ severity: 'success', summary: 'Deposit Successful', detail: 'Your Deposit has been completed.' });
+        } else {
+            this.messageService.add({ severity: 'error', summary: 'Deposit Rejected', detail: 'Your Deposit has been rejected', life: 3000 });
         }
       
       },
@@ -63,18 +63,32 @@ export class DepositeComponent implements OnInit {
   }
 
     onAccountChange() {
- 
-    
       this.accounts$?.subscribe(accounts => {
           accounts.forEach(account => {
               if (account.id == this.selectedAccountId) {
                   this.selectedAccount = account;
               }
           });
-      });
-      
+      });     
     }
 
+    confirm1(event: Event) {
+      this.confirmationService.confirm({
+          target: event.target as EventTarget,
+          message: `Are you sure that you want to Deposit ${this.amount}$ ?`,
+          header: 'Confirmation',
+          icon: 'pi pi-exclamation-triangle',
+          acceptIcon:"none",
+          rejectIcon:"none",
+          rejectButtonStyleClass:"p-button-text",
+          accept: () => {             
+            this.performDeposite();           
+          },
+          reject: () => {
+              this.messageService.add({ severity: 'error', summary: 'Deposit Rejected', detail: 'Your deposit has been rejected', life: 3000 });
+          }
+      });
+   }
 
 
 }

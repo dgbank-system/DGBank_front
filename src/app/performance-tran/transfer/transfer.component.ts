@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Transfer } from '../../interface/transfer';
 import { TransactionService } from '../../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
 import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { SharingService } from 'src/app/services/sharingService.service';
-import { Observable, map } from 'rxjs';
-
+import { Observable } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
@@ -26,7 +23,9 @@ export class TransferComponent implements OnInit {
 
   constructor(private transferService : TransactionService,
               private toaster : ToastrService,
-              private accountService : AccountService) {}
+              private accountService : AccountService,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService) {}
 
   ngOnInit(): void {
 
@@ -49,14 +48,11 @@ export class TransferComponent implements OnInit {
       {
         const msg = response.description
         this.accountService.updateBalance(this.selectedAccountA?.id, response.balanceA);
-        this.accountService.updateBalance(this.selectedAccountB?.id, response.balanceB);
-        
-        if( response.status === "Successful")
-        {
-          this.toaster.success(msg)
-        }
-        else{
-          this.toaster.error(msg)
+        this.accountService.updateBalance(this.selectedAccountB?.id, response.balanceB);       
+        if (response.status === "Successful") {
+            this.messageService.add({ severity: 'success', summary: 'Transfer Successful', detail: `Transfer successfully completed from Account  ${this.selectedAccountA?.id} to Account ${this.selectedAccountB?.id} by transferring an amount of ${this.amount}.`  });
+        } else {
+            this.messageService.add({ severity: 'error', summary: 'Transfer Rejected', detail: 'Your Transfer has been rejected', life: 3000 });
         }
       },
       (error) => 
@@ -88,5 +84,23 @@ export class TransferComponent implements OnInit {
     
   }
   }
+
+  confirm1(event: Event) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: `Are you sure that you want to Transfer ${this.amount}$ ?`,
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon:"none",
+        rejectIcon:"none",
+        rejectButtonStyleClass:"p-button-text",
+        accept: () => {             
+          this.PerformTransfer();           
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Transfer Rejected', detail: 'Your Transfer has been rejected', life: 3000 });
+        }
+    });
+ }
 
 }

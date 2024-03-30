@@ -8,19 +8,28 @@ import { DepositeComponent } from './deposite/deposite.component';
 import { PerformanceTranRoutingModule } from './performance-tran-routing.module';
 import { FormsModule } from '@angular/forms';
 import { PerformanceTranComponent } from './performTrxs/performance-tran.component';
-
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 @NgModule({
   declarations: [
     PerformanceTranComponent,
     TransferComponent,
     WithdrawComponent,
-    DepositeComponent
+    DepositeComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    PerformanceTranRoutingModule
+    PerformanceTranRoutingModule,
+    ToastModule,
+    ConfirmDialogModule,
+    
+  ],
+  providers: [
+    ConfirmationService,
+    MessageService
   ]
 })
 export class PerformanceTranModule { }

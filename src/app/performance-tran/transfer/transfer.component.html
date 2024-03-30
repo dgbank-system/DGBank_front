@@ -3,56 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-        body {
-            background-color: #37a4cc;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .register-form {
-            padding: 5%;
-        }
-
-        .card {
-            background-color: #fff;
-            border: none;
-            border-radius: 30px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.266);
-        }
-
-        .form-control {
-            border-radius: 30px;
-            font-size: 14px;
-        }
-
-        .radio-label {
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background-color: #37a4cc;
-            color: #fff;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 10px 20px;
-            font-weight: 600;
-            width: 100px;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .btn-primary:hover {
-            background-color: #364d63;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
@@ -60,7 +11,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="font-weight-bold text-center" style="color: #37a4cc;">Transfer Money</h3>
+                        <h3 class="font-weight-bold text-center" style="color: #37a4cc;">Transfer</h3>
                         <div class="row register-form">
                             <div class="mb-3">
                                 <select [(ngModel)]="selectedAccountAId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange('accountA')">
@@ -81,7 +32,11 @@
                             <div class="mb-3">
                                 <input type="number" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Amount" />
                             </div>
-                            <button type="button" class="btn btn-primary" (click)="PerformTransfer()">Perform</button>
+                            <div class="flex align-items-center justify-content-center font-bold border-round-lg m-2">
+                              <p-toast></p-toast>
+                              <p-confirmDialog></p-confirmDialog>
+                              <button  type="button" class="btn btn-primary"  (click)="confirm1($event)">Perform</button>
+                          </div>
                         </div>
                     </div>
                 </div>
