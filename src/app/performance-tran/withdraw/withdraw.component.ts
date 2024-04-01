@@ -5,6 +5,12 @@ import { AccountService } from '../../services/account.service';
 import { Account } from '../../interface/account';
 import { Observable } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
+
+
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
 @Component({
   selector: 'app-withdraw',
   templateUrl: './withdraw.component.html',
@@ -17,9 +23,12 @@ export class WithdrawComponent implements OnInit {
   accountfNames : String[] = [];
   accountlNames : String[] = []
   accounts$: Observable<Account[]> | undefined;
+  accounts: Account[] = [];
   accountIds : number[] = [];
   selectedAccountId: number = 0;
   balance : number | undefined ;
+  suggestions: { label: string; value: number }[] = [];
+
 
   constructor(private transactionSrevice : TransactionService ,
               private toaster : ToastrService,
@@ -34,6 +43,7 @@ export class WithdrawComponent implements OnInit {
 
     // Check if accountsSubject has emitted any data
     this.accountService.accounts$.subscribe(accounts => {
+      this.accounts = accounts;
       if (accounts.length === 0) {
         // Fetch accounts from the server if accountsSubject is empty
         this.accountService.fetchAccounts().subscribe();
@@ -47,12 +57,13 @@ export class WithdrawComponent implements OnInit {
 
   performWithdraw()
   {
+    
     this.transactionSrevice.addWithdraw(this.selectedAccount?.id , this.amount ).subscribe(
       (response : any) => 
       {
-        const msg = response.description;
+        
         this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA)
-        this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
+        // this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
         if (response.status === "Successful") {
             this.messageService.add({ severity: 'success', summary: 'Withdraw Successful', detail: 'Your Withdraw has been completed.' });
         } else {
@@ -77,6 +88,7 @@ export class WithdrawComponent implements OnInit {
     });
   }
 
+
   confirm1(event: Event) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
@@ -95,4 +107,43 @@ export class WithdrawComponent implements OnInit {
     });
   }
 
+ 
+
+  search(event: AutoCompleteCompleteEvent) {
+    if (!this.accounts) return;
+    
+    const query = event.query.toLowerCase();
+    const filteredAccounts = this.accounts
+        .filter(account => 
+            account.id.toString().includes(query) ||
+            account.customerFirstName.toLowerCase().includes(query) ||
+            account.customerLastName.toLowerCase().includes(query)
+        );
+        
+    if (filteredAccounts.length === 0) {
+        // If no accounts match the search criteria, set a single suggestion with "No Data Found" message
+        this.suggestions = [{ label: 'No Data Found', value: 0 }];
+    } else {
+        // If there are matching accounts, map them to suggestions
+        this.suggestions = filteredAccounts.map(account => ({ 
+            label: `${account.id} - ${account.customerFirstName} ${account.customerLastName}`, 
+            value: account.id 
+        }));
+    }
+}
+
+
+  selectAccountFromSearch(account: any) {
+    this.selectedAccountId = account.value;
+      this.accounts$?.subscribe(accounts => {
+        accounts.forEach(account => {
+            if (account.id == this.selectedAccountId) {
+                this.selectedAccount = account;
+            }
+        });
+    });
+  }
+
+ 
+  
 }

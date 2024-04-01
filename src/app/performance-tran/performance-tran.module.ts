@@ -11,6 +11,7 @@ import { PerformanceTranComponent } from './performTrxs/performance-tran.compone
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 @NgModule({
   declarations: [
     PerformanceTranComponent,
@@ -25,7 +26,7 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
     PerformanceTranRoutingModule,
     ToastModule,
     ConfirmDialogModule,
-    
+    AutoCompleteModule
   ],
   providers: [
     ConfirmationService,

@@ -5,6 +5,10 @@ import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
 import { Observable } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
@@ -20,7 +24,8 @@ export class TransferComponent implements OnInit {
   balance : number | undefined ;
   accountIds: number[] = [];
   accounts$: Observable<Account[]> | undefined;
-
+  accounts: Account[] = [];
+  suggestions: { label: string; value: number }[] = [];
   constructor(private transferService : TransactionService,
               private toaster : ToastrService,
               private accountService : AccountService,
@@ -33,6 +38,7 @@ export class TransferComponent implements OnInit {
 
     // Check if accountsSubject has emitted any data
     this.accountService.accounts$.subscribe(accounts => {
+      this.accounts = accounts;
       if (accounts.length === 0) {
         // Fetch accounts from the server if accountsSubject is empty
         this.accountService.fetchAccounts().subscribe();
@@ -102,5 +108,54 @@ export class TransferComponent implements OnInit {
         }
     });
  }
+ search(event: AutoCompleteCompleteEvent) {
+  if (!this.accounts) return;
+  
+      const query = event.query.toLowerCase();
+      const filteredAccounts = this.accounts
+      .filter(account => 
+          account.id.toString().includes(query) ||
+          account.customerFirstName.toLowerCase().includes(query) ||
+          account.customerLastName.toLowerCase().includes(query)
+      );
+      
+  if (filteredAccounts.length === 0) {
+      // If no accounts match the search criteria, set a single suggestion with "No Data Found" message
+      this.suggestions = [{ label: 'No Data Found', value: 0 }];
+  } else {
+      // If there are matching accounts, map them to suggestions
+      this.suggestions = filteredAccounts.map(account => ({ 
+          label: `${account.id} - ${account.customerFirstName} ${account.customerLastName}`, 
+          value: account.id 
+      }));
+  }
+}
+
+
+selectAccountFromSearch(account: any) {
+  if( this.selectedAccountAId)
+  {
+    this.selectedAccountAId = account.value;
+    this.accounts$?.subscribe(accounts => {
+      accounts.forEach(account => {
+          if (account.id == this.selectedAccountAId) {
+              this.selectedAccountA = account;
+          }
+      });
+  });
+  }
+  else{
+    this.selectedAccountBId = account.value;
+    this.accounts$?.subscribe(accounts => {
+      accounts.forEach(account => {
+          if (account.id == this.selectedAccountBId) {
+              this.selectedAccountB = account;
+          }
+      });
+  });
+  }
+ 
+}
+
 
 }

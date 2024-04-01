@@ -13,15 +13,19 @@
             <div class="card-body">
               <h3 class="font-weight-bold text-center" style="color: #37a4cc;">Withdraw</h3>
               <div class="row register-form">
-                <div class="mb-3">
+                <div class="mb-3">  
+                  <div class=" flex justify-content-center mb-4">
+                    <p-autoComplete  [(ngModel)]="selectedAccountId" [suggestions]="suggestions" placeholder="Enter Account INFO" (completeMethod)="search($event)" (onSelect)="selectAccountFromSearch($event.value)"></p-autoComplete>
+                  </div>   
+                 
                   <select [(ngModel)]="selectedAccountId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange()">
                     <option value=0>Select an Account</option>
-                    <option *ngFor="let account of accounts$ | async" [value]="account.id">
+                    <option *ngFor="let account of accounts" [value]="account.id">
                       {{ account.id }} - {{ account.customerFirstName }} {{ account.customerLastName }}
                     </option>
                   </select>
                 </div>
-                <div class="mb-3">
+                <div class="mb-5">
                   <input type="number" [(ngModel)]="amount" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Amount" />
                 </div>
                 <div class="flex align-items-center justify-content-center font-bold border-round-lg m-2">
@@ -41,8 +45,12 @@
           <div class="card">
             <div class="card-body">
               <h4 class="font-weight-bold text-center" style="color: black;">Selected Account Information</h4>
-              <p>Account Holder's Name: {{ selectedAccount.customerFirstName }} {{selectedAccount.customerLastName}}</p>
-              <p>Account Balance: {{ balance  ?  balance : selectedAccount.balance  }}$</p>
+              <p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 10px;">
+                Account Holder's Name:<strong>{{ selectedAccount.customerFirstName }} {{selectedAccount.customerLastName}}</strong>
+              </p>
+              <p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 10px;">
+                Account Balance: <strong>{{ balance  ?  balance : selectedAccount.balance  }}$ </strong>
+              </p>
             </div>
           </div>
         </div>
