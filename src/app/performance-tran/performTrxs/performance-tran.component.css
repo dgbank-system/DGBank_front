@@ -42,7 +42,11 @@ body {
 } 
 .btn-circle:hover {
     background-color: #727578;
-    transform: scale(1.15);
+    transform: scale(1.2, 1.2);
+}
+.btn-circle-container:hover .btn-circle:not(:hover) {
+    filter: blur(10px);
+    transform: scale(1.0, 1.0);
 }
 
 @keyframes bounce {

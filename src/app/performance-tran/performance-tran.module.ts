@@ -10,14 +10,15 @@ import { FormsModule } from '@angular/forms';
 import { PerformanceTranComponent } from './performTrxs/performance-tran.component';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+
 @NgModule({
   declarations: [
     PerformanceTranComponent,
     TransferComponent,
     WithdrawComponent,
     DepositeComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -26,11 +27,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     PerformanceTranRoutingModule,
     ToastModule,
     ConfirmDialogModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    
   ],
-  providers: [
-    ConfirmationService,
-    MessageService
-  ]
+  providers: []
 })
 export class PerformanceTranModule { }

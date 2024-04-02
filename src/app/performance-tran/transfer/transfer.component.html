@@ -19,7 +19,7 @@
                             </div>
                             <!-- Account B info -->
                             <div class="col-md-5 mb-4">
-                                <p-autoComplete  [(ngModel)]="selectedAccountBId" [suggestions]="suggestions" placeholder="Enter Account B INFO" (completeMethod z)="search($event)" (onSelect)="selectAccountFromSearch($event.value)"></p-autoComplete>
+                                <p-autoComplete  [(ngModel)]="selectedAccountBId" [suggestions]="suggestions" placeholder="Enter Account B INFO" (completeMethod)="search($event)" (onSelect)="selectAccountFromSearch($event.value)"></p-autoComplete>
                             </div>
                           <div class="mb-3">
                                 <select [(ngModel)]="selectedAccountAId" [ngModelOptions]="{ standalone: true }" class="form-control"  (change)="onAccountChange('accountA')">
@@ -41,11 +41,9 @@
                             <div class="mb-4">
                                 <input type="number" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Amount" />
                             </div>
-                            <div class="flex align-items-center justify-content-center font-bold border-round-lg m-2">
-                              <p-toast></p-toast>
-                              <p-confirmDialog></p-confirmDialog>
-                              <button  type="button" class="btn btn-primary"  (click)="confirm1($event)">Perform</button>
-                          </div>
+                            <div class="flex align-items-center justify-content-center ">
+                              <button type="button" class="btn btn-primary" (click)="DialogConfirm()" >Perform</button>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -58,8 +56,8 @@
           <div class="card">
             <div class="card-body">
               <h4 class="font-weight-bold text-center" style="color: black;">Selected Account Information ({{selectedAccountA.id}})</h4>
-              <p>Account Holder's Name: {{ selectedAccountA.customerFirstName }} {{ selectedAccountA.customerLastName }}</p>
-              <p>Account Balance: {{  balance  ?  balance : selectedAccountA.balance }}$</p>
+              <p>Account Holder's Name:<strong> {{ selectedAccountA.customerFirstName }} {{selectedAccountA.customerLastName}}</strong></p>
+              <p>Account Balance: <strong>{{ balance  ?  balance : selectedAccountA.balance  }}$</strong></p>
             </div>
           </div>
         </div>
@@ -69,8 +67,8 @@
           <div class="card">
             <div class="card-body">
               <h4 class="font-weight-bold text-center" style="color: black;">Selected Account Information ({{selectedAccountB.id}})</h4>
-              <p>Account Holder's Name: {{ selectedAccountB.customerFirstName }} {{ selectedAccountB.customerLastName }}</p>
-              <p>Account Balance: {{  balance  ?  balance : selectedAccountB.balance }}$</p>
+              <p>Account Holder's Name:<strong> {{ selectedAccountB.customerFirstName }} {{selectedAccountB.customerLastName}}</strong></p>
+              <p>Account Balance: <strong>{{ balance  ?  balance : selectedAccountB.balance  }}$</strong></p>
             </div>
           </div>
         </div>

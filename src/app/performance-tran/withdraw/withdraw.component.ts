@@ -4,8 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../services/account.service';
 import { Account } from '../../interface/account';
 import { Observable } from 'rxjs';
-import { ConfirmationService, MessageService } from 'primeng/api';
-
+import Swal from 'sweetalert2'
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -17,6 +16,8 @@ interface AutoCompleteCompleteEvent {
   styleUrls: ['./withdraw.component.css']
 })
 export class WithdrawComponent implements OnInit {
+[x: string]: any;
+
 
   amount : number | undefined;
   selectedAccount: Account | undefined ;
@@ -33,8 +34,6 @@ export class WithdrawComponent implements OnInit {
   constructor(private transactionSrevice : TransactionService ,
               private toaster : ToastrService,
               private accountService : AccountService,
-              private confirmationService: ConfirmationService,
-              private messageService: MessageService 
              ){}
 
   ngOnInit(): void {
@@ -63,11 +62,10 @@ export class WithdrawComponent implements OnInit {
       {
         
         this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA)
-        // this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
         if (response.status === "Successful") {
-            this.messageService.add({ severity: 'success', summary: 'Withdraw Successful', detail: 'Your Withdraw has been completed.' });
+          Swal.fire("Saved!", "Your Withdraw has been completed.", "success");
         } else {
-            this.messageService.add({ severity: 'error', summary: 'Withdraw Rejected', detail: 'Your account balance is not sufficient to complete this withdrawal request', life: 3000 });
+          Swal.fire("Changes are not saved", "Your account balance is not sufficient to complete this withdrawal request", "error");
         }
       },
       (error) => 
@@ -89,23 +87,7 @@ export class WithdrawComponent implements OnInit {
   }
 
 
-  confirm1(event: Event) {
-    this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: `Are you sure that you want to Withdraw ${this.amount}$ ?`,
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        acceptIcon:"none",
-        rejectIcon:"none",
-        rejectButtonStyleClass:"p-button-text",
-        accept: () => {             
-          this.performWithdraw();           
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Your Withdraw has been rejected', life: 3000 });
-        }
-    });
-  }
+
 
  
 
@@ -130,7 +112,7 @@ export class WithdrawComponent implements OnInit {
             value: account.id 
         }));
     }
-}
+  }
 
 
   selectAccountFromSearch(account: any) {
@@ -143,6 +125,21 @@ export class WithdrawComponent implements OnInit {
         });
     });
   }
+
+  DialogConfirm() {
+    Swal.fire({
+      title: `Are you sure that you want to Withdraw ${this.amount}$ ?`,
+      showCancelButton: true,
+      showConfirmButton :true,
+      icon:"question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.performWithdraw();
+      }
+    });
+  }
+
+
 
  
   

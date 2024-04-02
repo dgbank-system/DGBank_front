@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -28,11 +31,10 @@
                 <div class="mb-5">
                   <input type="number" [(ngModel)]="amount" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Amount" />
                 </div>
-                <div class="flex align-items-center justify-content-center font-bold border-round-lg m-2">
-                  <p-toast></p-toast>
-                  <p-confirmDialog></p-confirmDialog>
-                  <button  type="button" class="btn btn-primary"  (click)="confirm1($event)">Perform</button>
+                <div class="flex align-items-center justify-content-center ">
+                  <button type="button" class="btn btn-primary" (click)="DialogConfirm()" >Perform</button>
                 </div>  
+                
               </div>
             </div>
           </div>

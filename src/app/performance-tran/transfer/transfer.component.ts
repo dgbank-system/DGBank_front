@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
 import { Observable } from 'rxjs';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import Swal from 'sweetalert2';
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
@@ -28,9 +28,7 @@ export class TransferComponent implements OnInit {
   suggestions: { label: string; value: number }[] = [];
   constructor(private transferService : TransactionService,
               private toaster : ToastrService,
-              private accountService : AccountService,
-              private confirmationService: ConfirmationService,
-              private messageService: MessageService) {}
+              private accountService : AccountService,) {}
 
   ngOnInit(): void {
 
@@ -56,9 +54,9 @@ export class TransferComponent implements OnInit {
         this.accountService.updateBalance(this.selectedAccountA?.id, response.balanceA);
         this.accountService.updateBalance(this.selectedAccountB?.id, response.balanceB);       
         if (response.status === "Successful") {
-            this.messageService.add({ severity: 'success', summary: 'Transfer Successful', detail: `Transfer successfully completed from Account  ${this.selectedAccountA?.id} to Account ${this.selectedAccountB?.id} by transferring an amount of ${this.amount}.`  });
+          Swal.fire("Saved!", `Transfer successfully completed from Account  ${this.selectedAccountA?.id} to Account ${this.selectedAccountB?.id} by transferring an amount of ${this.amount}$.`, "success");
         } else {
-            this.messageService.add({ severity: 'error', summary: 'Transfer Rejected', detail: 'Your Transfer has been rejected', life: 3000 });
+          Swal.fire("Changes are not saved", "Your account balance is not sufficient to complete this Transfer request", "error");
         }
       },
       (error) => 
@@ -91,23 +89,8 @@ export class TransferComponent implements OnInit {
   }
   }
 
-  confirm1(event: Event) {
-    this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: `Are you sure that you want to Transfer ${this.amount}$ ?`,
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        acceptIcon:"none",
-        rejectIcon:"none",
-        rejectButtonStyleClass:"p-button-text",
-        accept: () => {             
-          this.PerformTransfer();           
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Transfer Rejected', detail: 'Your Transfer has been rejected', life: 3000 });
-        }
-    });
- }
+ 
+ 
  search(event: AutoCompleteCompleteEvent) {
   if (!this.accounts) return;
   
@@ -133,18 +116,22 @@ export class TransferComponent implements OnInit {
 
 
 selectAccountFromSearch(account: any) {
-  if( this.selectedAccountAId)
+  console.log("acc A : " , this.selectedAccountAId );
+  console.log("acc B : " , this.selectedAccountBId );
+  console.log("fuck" ,account)
+  if( account === this.selectedAccountAId)
   {
     this.selectedAccountAId = account.value;
     this.accounts$?.subscribe(accounts => {
       accounts.forEach(account => {
           if (account.id == this.selectedAccountAId) {
               this.selectedAccountA = account;
+              
           }
       });
   });
   }
-  else{
+  else if(account === this.selectedAccountBId){
     this.selectedAccountBId = account.value;
     this.accounts$?.subscribe(accounts => {
       accounts.forEach(account => {
@@ -156,6 +143,20 @@ selectAccountFromSearch(account: any) {
   }
  
 }
+
+DialogConfirm() {
+  Swal.fire({
+    title: `Are you sure that you want to Tranfer ${this.amount}$ ?`,
+    showCancelButton: true,
+    showConfirmButton :true,
+    icon:"question",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.PerformTransfer();
+    }
+  });
+}
+
 
 
 }

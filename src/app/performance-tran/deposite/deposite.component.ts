@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Account } from '../../interface/account';
 import { AccountService } from '../../services/account.service';
 import { Observable } from 'rxjs';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import Swal from 'sweetalert2';
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
@@ -26,9 +26,8 @@ export class DepositeComponent implements OnInit {
   suggestions: { label: string; value: number }[] = [];
   constructor(private transferService : TransactionService ,
               private toaster : ToastrService ,
-              private accountService :AccountService,
-              private confirmationService: ConfirmationService,
-              private messageService: MessageService){}
+              private accountService :AccountService
+              ){}
 
   ngOnInit(): void {
 
@@ -53,9 +52,9 @@ export class DepositeComponent implements OnInit {
         this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
         // this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
         if (response.status === "Successful") {
-            this.messageService.add({ severity: 'success', summary: 'Deposit Successful', detail: 'Your Deposit has been completed.' });
+          Swal.fire("Saved!", "Your Deposit has been completed.", "success");
         } else {
-            this.messageService.add({ severity: 'error', summary: 'Deposit Rejected', detail: 'Your Deposit has been rejected', life: 3000 });
+          Swal.fire("Changes are not saved", "Your account balance is not sufficient to complete this Deposit request", "error");
         }
       
       },
@@ -77,23 +76,7 @@ export class DepositeComponent implements OnInit {
       });
     }
 
-    confirm1(event: Event) {
-      this.confirmationService.confirm({
-          target: event.target as EventTarget,
-          message: `Are you sure that you want to Deposit ${this.amount}$ ?`,
-          header: 'Confirmation',
-          icon: 'pi pi-exclamation-triangle',
-          acceptIcon:"none",
-          rejectIcon:"none",
-          rejectButtonStyleClass:"p-button-text",
-          accept: () => {             
-            this.performDeposite();           
-          },
-          reject: () => {
-              this.messageService.add({ severity: 'error', summary: 'Deposit Rejected', detail: 'Your deposit has been rejected', life: 3000 });
-          }
-      });
-   }
+    
 
    search(event: AutoCompleteCompleteEvent) {
     if (!this.accounts) return;
@@ -128,6 +111,20 @@ export class DepositeComponent implements OnInit {
           }
       });
   });
+  }
+
+
+  DialogConfirm() {
+    Swal.fire({
+      title: `Are you sure that you want to Deposit ${this.amount}$ ?`,
+      showCancelButton: true,
+      showConfirmButton :true,
+      icon:"question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.performDeposite();
+      }
+    });
   }
 
 }

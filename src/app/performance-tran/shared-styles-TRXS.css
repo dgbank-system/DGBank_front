@@ -4,6 +4,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Open Sans",
+     -apple-system, BlinkMacSystemFont,
+      "Segoe UI",
+       Roboto, Oxygen-Sans,
+        Ubuntu, Cantarell,
+       "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif; 
 }
 
 .register-form

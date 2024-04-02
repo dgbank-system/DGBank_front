@@ -28,11 +28,9 @@
                             <div class="mb-5">
                                 <input type="number" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Amount" />
                             </div>
-                            <div class="flex align-items-center justify-content-center font-bold border-round-lg m-2">
-                                <p-toast></p-toast>
-                                <p-confirmDialog></p-confirmDialog>
-                                <button  type="button" class="btn btn-primary"  (click)="confirm1($event)">Perform</button>
-                            </div>                         
+                            <div class="flex align-items-center justify-content-center ">
+                              <button type="button" class="btn btn-primary" (click)="DialogConfirm()" >Perform</button>
+                            </div>                    
                         </div>
                     </div>
                 </div>
