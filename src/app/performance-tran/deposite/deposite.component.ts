@@ -50,7 +50,6 @@ export class DepositeComponent implements OnInit {
       {
        
         this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
-        // this.accountService.updateBalance(this.selectedAccount?.id, response.balanceA);
         if (response.status === "Successful") {
           Swal.fire("Saved!", "Your Deposit has been completed.", "success");
         } else {
@@ -115,6 +114,10 @@ export class DepositeComponent implements OnInit {
 
 
   DialogConfirm() {
+    if (!this.amount) {
+      Swal.fire("Warning!", "Please enter a valid amount.", "warning");
+      return; 
+    }
     Swal.fire({
       title: `Are you sure that you want to Deposit ${this.amount}$ ?`,
       showCancelButton: true,

@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Rule } from '../interface/rule';
-import { RuleType } from '../enum/ruletypeEnum';
-import { Operation } from '../enum/operationEnum';
-import { Aggregation } from '../enum/aggregationEnum';
-import { RuleService } from '../services/rule.service';
-import { TrxType } from '../enum/trxEnum';
+import { Rule } from '../../interface/rule';
+import { RuleType } from '../../enum/ruletypeEnum';
+import { Operation } from '../../enum/operationEnum';
+import { Aggregation } from '../../enum/aggregationEnum';
+import { RuleService } from '../../services/rule.service';
+import { TrxType } from '../../enum/trxEnum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 

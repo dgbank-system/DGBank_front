@@ -9,7 +9,7 @@ import { AccountfFormComponent } from './account/accountf-form/accountf-form.com
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AccountfDetailsComponent } from './account/accountf-details/accountf-details.component';
 import { AlertComponent } from './alert/alert.component';
-import { RuleComponent } from './rule/rule.component';
+
 const routes: Routes = [
   { path: '', component: LoginComponent }, 
   { path: 'home', component: HomeComponent },
@@ -26,7 +26,6 @@ const routes: Routes = [
     loadChildren: () => import('./performance-tran/performance-tran.module').then(m => m.PerformanceTranModule) 
   },
   { path : 'alert' , component: AlertComponent},
-  { path : 'rule' , component:RuleComponent},
 ];
 
 

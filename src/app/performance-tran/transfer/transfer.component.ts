@@ -145,6 +145,10 @@ selectAccountFromSearch(account: any) {
 }
 
 DialogConfirm() {
+  if (!this.amount) {
+    Swal.fire("Warning!", "Please enter a valid amount.", "warning");
+    return; 
+  }
   Swal.fire({
     title: `Are you sure that you want to Tranfer ${this.amount}$ ?`,
     showCancelButton: true,

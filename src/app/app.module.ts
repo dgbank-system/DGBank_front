@@ -19,7 +19,6 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { AlertComponent } from './alert/alert.component';
-import { RuleComponent } from './rule/rule.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'src/environments/environment.development';
 
@@ -35,8 +34,7 @@ import { environment } from 'src/environments/environment.development';
     AccountfFormComponent,
     AccountfDetailsComponent,
     TransactionsComponent,
-    AlertComponent,
-    RuleComponent,
+    AlertComponent
     
     
   ],

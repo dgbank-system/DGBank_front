@@ -52,6 +52,6 @@ export class PerformanceTranComponent  {
 
   navigateTorule()
   {
-    this.router.navigate(['/rule']);
+    this.router.navigate(['services/scenarios']);
   }
 }
