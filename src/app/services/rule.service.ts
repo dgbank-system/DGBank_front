@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class RuleService {
   private apiUrl = environment.apiBaseUrl;
+
   constructor(private http: HttpClient) {}
 
-  private  ruleState : boolean = false;
   addRule(rule: Rule) :  Observable<Rule>{
     return this.http.post<Rule>(`${this.apiUrl}/rules/add`, rule); 
   }
@@ -32,12 +32,11 @@ export class RuleService {
     return this.http.delete<Rule>(`${this.apiUrl}/rules/delete/${ruleId}`)
   }
 
-  setRuleStatus(status: Boolean): void {
-    localStorage.setItem('ruleStatus', JSON.stringify(status));
+  public applyRules()
+  {
+    const url = `${this.apiUrl}/rules/applyRules`
+    return this.http.get(url);
   }
-  
-  getRuleStatus(): boolean {
-    const storedValue = localStorage.getItem('ruleStatus') 
-    return storedValue === 'true';
-  }
+
+
 }

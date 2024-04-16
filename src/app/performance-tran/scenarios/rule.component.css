@@ -1,0 +1,186 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: montserrat;
+}
+nav{
+    background: none;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0; /* Place the navbar at the top of the section */
+    left: 0;
+    z-index: 1000; /* Ensure the navbar stays above the background image */
+    
+}
+
+label.logo
+{
+    color: white;
+    font-size: 40px;
+    line-height: 80px;
+    padding: 0 150px ;
+    font-weight: bold;
+}
+
+nav ul{
+    float: right;
+    margin:0  50px 0 0;
+}
+nav ul li {
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+nav ul li a 
+{
+    color: white;
+    font-size: 17px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-transform: uppercase;
+} 
+a.active,a:hover{
+    background: #37ccacb6;
+    transition: .5s;
+}
+
+.checkbtn{
+    font-size: 30px;
+    color: white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+
+#check{
+    display: none;
+}
+
+@media (max-width: 952px)
+{
+    label.logo{
+        font-size: 30px;
+        padding-left: 50px;
+    }
+    nav ul li a{
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 830px)
+{
+    .checkbtn{
+        display: block;
+    }
+    ul{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #2c3e50;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+    }
+    nav ul li{
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+      }
+      nav ul li a{
+        font-size: 20px;
+      }
+      #check:checked ~ ul{
+        left: 0;
+      }
+}
+
+.main-container{
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh ;
+}
+
+section{
+    background: url('/assets/images/R.jpeg') no-repeat;
+    background-size: cover;
+    height: 100vh ;
+    /* position: relative; */
+    scroll-snap-align: start;
+}
+
+.buttons-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.btn-circle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-circle {   
+    width: 200px;
+    height: 200px;
+    margin: 0 100px;
+    border-radius: 50%;
+    background-color: #37ccac;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+} 
+
+.btn-circle:hover {
+    background-color: gray;
+    transform: scale(1.2);
+}
+
+.btn-circle:hover .btn-icon{
+    transform: scale(1.15);
+    animation: bounce 0.5s infinite;
+}
+
+.btn-label {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    text-transform: uppercase; /* Convert text to uppercase */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for enhancement */
+}
+
+
+
+
+
+.second-section {
+    position: relative;
+    height: 100vh; /* Adjust the height to leave space for the buttons */
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+  }
+
+.second-section table {
+    
+  width: 90%; /* Adjust the width as needed */
+  max-width: 100%; /* Ensure the table does not exceed the container's width */
+}
+
+
+

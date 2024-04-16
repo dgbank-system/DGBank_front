@@ -65,9 +65,5 @@ public onOpenModel(alert:Alert | null ): void{
  }
 
 
- public closeDeleteModal(): void {
-  const modal = this.el.nativeElement.querySelector('#TransactionTable');
-    this.renderer.removeClass(modal, 'show');
- 
-}
+
 }

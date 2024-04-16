@@ -1,12 +1,14 @@
-import { Transaction } from "./transaction";
+import { Account } from "./account";
+import { Customer } from "./customer";
+import { TransactionGroup } from "./transactionGroup";
 
 export interface Alert{
     id : number ,
-    customerFirstName : String;
-    customerLastName : string
+    customer : Customer,
+    account : Account,
     description : string ,
     accountId : number,
-    trxs : Transaction[],
+    transactionGroups : TransactionGroup[],
     showTransactions: boolean
     
 }

@@ -53,7 +53,7 @@ export class DepositeComponent implements OnInit {
         if (response.status === "Successful") {
           Swal.fire("Saved!", "Your Deposit has been completed.", "success");
         } else {
-          Swal.fire("Changes are not saved", "Your account balance is not sufficient to complete this Deposit request", "error");
+          Swal.fire("Failed Transaction Process", "Your account balance is not sufficient to complete this Deposit request", "error");
         }
       
       },

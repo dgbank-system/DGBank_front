@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+         <a  href="home" class="navbar-brand" ><img href="" src="assets\images\asd.png" alt="logo" width="200"></a>
+    </nav>
+    <div class="container">
+        <div class="row">
+          <h2 class="text-center mt-4">Create a Scenario</h2>
+          <div class="col-md-9 mx-auto">
+            <app-stepper [linearModeSelected]="false" #appStepper>
+              <cdk-step [label]="'Type'"> 
+                <app-information></app-information>
+              </cdk-step>
+              <cdk-step [label]="'Contact'">
+                <app-contact></app-contact>
+              </cdk-step>
+              <cdk-step [label]="'Security'">
+                <app-security></app-security>
+              </cdk-step>
+              <cdk-step [label]="'aggregation'">
+                <app-agg></app-agg>
+              </cdk-step>
+              <cdk-step [label]="'Finish'">
+                <app-finish></app-finish>
+              </cdk-step>
+            </app-stepper>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

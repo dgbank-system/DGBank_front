@@ -56,7 +56,7 @@ export class TransferComponent implements OnInit {
         if (response.status === "Successful") {
           Swal.fire("Saved!", `Transfer successfully completed from Account  ${this.selectedAccountA?.id} to Account ${this.selectedAccountB?.id} by transferring an amount of ${this.amount}$.`, "success");
         } else {
-          Swal.fire("Changes are not saved", "Your account balance is not sufficient to complete this Transfer request", "error");
+          Swal.fire("Failed Transaction Process", "Your account balance is not sufficient to complete this Transfer request", "error");
         }
       },
       (error) => 

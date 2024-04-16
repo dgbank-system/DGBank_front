@@ -5,6 +5,8 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 import { DepositeComponent } from './deposite/deposite.component';
 import { PerformanceTranComponent } from './performTrxs/performance-tran.component';
 import { RuleComponent } from './scenarios/rule.component';
+import { ScenariosTestComponent } from './scenarios-test/scenarios-test.component';
+
 const routes: Routes = [
   { path: 'all',  component: PerformanceTranComponent },
   { path: 'transfer', component: TransferComponent },

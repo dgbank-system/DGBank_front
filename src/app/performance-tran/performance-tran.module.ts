@@ -12,6 +12,16 @@ import { PerformanceTranComponent } from './performTrxs/performance-tran.compone
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import {MatStepperModule} from '@angular/material/stepper';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import {  StepperComponent } from './stepper/stepper.component';
+import { ScenariosTestComponent } from './scenarios-test/scenarios-test.component';
+import { InformationComponent } from './stepper/info.component';
+import { ContactComponent } from './stepper/contact.component';
+import { SecurityComponent } from './stepper/security.component';
+import { FinishComponent } from './stepper/finish.component';
+import { AppComponent } from '../app.component';
+import { AggComponent } from './stepper/agg.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +29,14 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     TransferComponent,
     WithdrawComponent,
     DepositeComponent,
-    RuleComponent
+    RuleComponent,
+    StepperComponent ,
+    ScenariosTestComponent,
+    InformationComponent,
+    ContactComponent,
+    SecurityComponent,
+    FinishComponent,
+    AggComponent
   ],
   imports: [
     CommonModule,
@@ -29,8 +46,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ToastModule,
     ConfirmDialogModule,
     AutoCompleteModule,
-    
+    MatStepperModule,
+    CdkStepperModule,
+
   ],
-  providers: []
+  exports:[CdkStepperModule],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class PerformanceTranModule { }

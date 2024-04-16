@@ -41,11 +41,11 @@
                 
               <tr>
                 <td class="text-center">
-                    <ng-container *ngIf="alert?.customerFirstName || alert?.customerLastName; else accountIdDisplay">
-                      {{ alert?.customerFirstName }} {{ alert?.customerLastName }}
+                    <ng-container *ngIf="alert?.customer?.firstName || alert?.customer?.lastName; else accountIdDisplay">
+                      {{ alert?.customer?.firstName }} {{ alert?.customer?.lastName }}
                     </ng-container>
                     <ng-template #accountIdDisplay>
-                      {{ alert.accountId }}
+                      {{ alert.account.id }}
                     </ng-template>
                   </td>
                 <td class="text-center">
@@ -66,33 +66,32 @@
     <div class="modal-dialog modal-xl"> 
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5" id="employeeEditModalLabel">Transactions of {{selectedAlert?.customerFirstName}} {{selectedAlert?.customerLastName}}</h3>
+                <h3 class="modal-title fs-5" id="employeeEditModalLabel">Transactions of {{selectedAlert?.customer?.firstName}} {{selectedAlert?.customer?.lastName}}</h3>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
 
             </div>
             <div class="modal-body">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Description</th>
-                    </tr>
+                        <tr>
+                            <th class="text-center">Transaction ID</th>
+                            <th class="text-center">Scope</th>
+                            <th class="text-center">Customer ID / Account ID</th>
+                            <th class="text-center">Transaction Type</th>
+                            <th class="text-center">Aggregated Amount</th>   
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let transaction of selectedAlert?.trxs">
-                        <td>{{ transaction.id }}</td>
-                        <td>{{ transaction.type }}</td>
-                        <td>{{ transaction.amount }}</td>
-                        <td>{{ transaction.date }}</td>
-                        <td>{{ transaction.status }}</td>
-                        <td>{{ transaction.description }}</td>
-                    </tr>
+                        <tr *ngFor="let transaction of selectedAlert?.transactionGroups">
+                            <td class="text-center">{{ transaction?.id }}</td>
+                            <td class="text-center">{{ transaction?.scope }}</td>
+                            <td class="text-center">{{ transaction?.scope === 'customer' ? transaction?.customerId : transaction?.accountId }}</td>
+                            <td class="text-center">{{ transaction?.transactionType }}</td>
+                            <td class="text-center">{{ transaction?.aggregatedAmount }}</td>
+                        </tr>
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>

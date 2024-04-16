@@ -65,7 +65,7 @@ export class WithdrawComponent implements OnInit {
         if (response.status === "Successful") {
           Swal.fire("Saved!", "Your Withdraw has been completed.", "success");
         } else {
-          Swal.fire("Changes are not saved", "Your account balance is not sufficient to complete this withdrawal request", "error");
+          Swal.fire("Failed Transaction Process", "Your account balance is not sufficient to complete this withdrawal request", "error");
         }
       },
       (error) => 

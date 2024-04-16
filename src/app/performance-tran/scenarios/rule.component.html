@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-expand-lg navbar-dark ">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark ">
   <a  href="home" class="navbar-brand" ><img href="" src="assets\images\asd.png" alt="logo" width="200"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
@@ -12,47 +12,102 @@
           <a  class="btn btn-primary tooltips"  style="color: rgb(255, 255, 255);" (click)="onOpenModel($event,null, 'add')">Add Rule  <span class="sr-only">(current)</span></a>
        </li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
-       <input type="search"  (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
-        name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." required>
-    </form> -->
- </div> 
-</nav>
-<hr>
-<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" id="main-container">
-  <div class="row">
-    <table class="table table-bordered table-hover table-striped ">
-      <thead >
-        <tr>
-          <th>Rule Number</th>
-          <th>Based on</th>
-          <th>Description</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let rule of rules">
-          <td class="text-center">{{ rule?.id }}</td>
-          <td class="text-center">{{ rule?.ruleType }}</td>
-          <td class ="text-center">IF the {{rule?.aggregation}} on (Amount) of the {{rule?.transactionType}} {{rule?.operation}} {{rule?.amount}} </td>
-          
-          <td class ="text-center">
-            <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" (click)="onOpenModel($event, rule, 'edit')">
-              <i class="fa fa-pencil"></i>
-            </a>
-            <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete" (click)="onOpenModel($event, rule, 'delete')">
-              <i class="fa fa-times"></i>
-            </a>
-          </td>
 
-          
-        </tr>
-      </tbody>
-    </table>
+ </div> 
+</nav> -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css"> 
+  </head>
+  <body>
+<nav>
+  <input type="checkbox" id="check">
+  <label for="check" class="checkbtn">
+    <i class="fa fa-bars"></i>
+  </label>
+  <label class="logo">DGBank</label>
+  
+  <ul>
+    <li>
+      <a routerLink="/home">
+        <i class="fa fa-home" style="color: white; "></i>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <i class="fa fa-info" style="color: white; "></i>
+      </a>
+    </li>
+    <li><a routerLink="/services/withdraw">Withdraw</a></li>
+    <li><a routerLink="/services/deposite">Deposite</a></li>
+    <li><a routerLink="/services/transfer">Transfer</a></li>
+  </ul>
+</nav>
+<div class="main-container">
+  <section class="first-section">
+    <div class="buttons-container">
+      <div class="btn-circle-container">
+        <button type="button" class="btn btn-circle" (click)="onOpenModel($event , null , 'add')">
+          <span class="btn-label">Create<br>A<br>Scenario</span>
+        </button>
+        
+        <button type="button" class="btn btn-circle" (click)="scrollToMainContainer()">
+          <span class="btn-label">Show<br>Scenarios</span>
+        </button>
+
+        <button type="button" class="btn btn-circle" (click)="applyRules()">
+          <span class="btn-label">Apply<br>Scenarios</span>
+        </button>
+      </div>
   </div>
+  </section>
+
+<section class="second-section"  id="table-container">
+ 
+    
+      <table class="table table-bordered table-hover table-striped">
+        <thead style="background-color: gray;">
+          <tr>
+            <th>Rule Number</th>
+            <th>Based on</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rule of rules" style="color: white; font-size: 20px;">
+            <td class="text-center">{{ rule?.id }}</td>
+            <td class="text-center">{{ rule?.ruleType }}</td>
+            <td class="text-center">IF the {{rule?.aggregation}} on (Amount) of the {{rule?.transactionType}} {{rule?.operation}} {{rule?.amount}} </td>
+            
+            <td class="text-center">
+              <a href="#" class="btn btn-success tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" (click)="onOpenModel($event, rule, 'edit')">
+                <i class="fa fa-pencil"></i>
+              </a>
+              &nbsp;&nbsp; 
+              <a href="#" class="btn btn-danger tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete" (click)="onOpenModel($event, rule, 'delete')">
+                <i class="fa fa-times"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+</section>
+
 </div>
+
+
+
+
+
+
+
 
 
 <div class="modal fade" id="AddRuleModel" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
@@ -203,3 +258,4 @@
   </div>
 </div>
 
+</body>

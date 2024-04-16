@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild,HostListener } from '@angular/core';
 import { Rule } from '../../interface/rule';
 import { RuleType } from '../../enum/ruletypeEnum';
 import { Operation } from '../../enum/operationEnum';
@@ -7,6 +7,7 @@ import { RuleService } from '../../services/rule.service';
 import { TrxType } from '../../enum/trxEnum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-rule',
@@ -34,7 +35,7 @@ public rules!: Rule[];
  @ViewChild('deleteModalCloseButton') deleteModalCloseButton: ElementRef | undefined;
 
  ruleDescription: string = '';
- constructor(private ruleService: RuleService){}
+ constructor(private ruleService: RuleService , private elRef: ElementRef){}
 
   ngOnInit() {
     
@@ -110,9 +111,9 @@ public rules!: Rule[];
   }
 
 
-  public onOpenModel(event: Event,rule:Rule | null , mode : string): void{
+  public onOpenModel(event: Event , rule: Rule | null , mode : string): void{
     event.preventDefault();
-    const container = document.getElementById('main-container');
+    const container = document.getElementById('table-container');
     const button = document.createElement('button');
     button.type = 'button';
     button.style.display = 'none';
@@ -148,7 +149,25 @@ public rules!: Rule[];
     }
   }
 
-
-  
+  scrollToMainContainer() {
+    const mainContainer = document.getElementById('table-container');
+  if (mainContainer !== null) {
+    mainContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
  
+  applyRules()
+  {
+    this.ruleService.applyRules().subscribe(
+      (response: any)=> {
+        console.log('Scenarios applied successfully on all Transactions', response);
+        // Handle the response or perform additional operations
+      },
+      (error) => {
+        console.error('Error in apply Scenarios', error);
+        // Handle error
+      }
+    )
+  }
+
 }
